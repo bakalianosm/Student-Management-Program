@@ -6,7 +6,7 @@
 
 #include "hash_table.h"
 #include "linked_list.h"	
-#define FIRST_HASH_SIZE 53
+#define FIRST_HASH_SIZE 3
 // Χρησιμοποιούμε open addressing, οπότε σύμφωνα με την θεωρία, πρέπει πάντα να διατηρούμε
 // τον load factor του  hash table μικρότερο ή ίσο του 0.5, για να έχουμε αποδoτικές πράξεις
 #define MAX_LOAD_FACTOR 0.9
@@ -53,37 +53,7 @@ int map_size(Map map) {
 }
 
 // Συνάρτηση για την επέκταση του Hash Table σε περίπτωση που ο load factor μεγαλώσει πολύ.
-static void rehash(Map map) {
-	int old_capacity = map->capacity ;
-	List* old_array = map->array;
 
-	map->capacity *= 2 ;
-
-	map->array = malloc(map->capacity * sizeof(List));
-
-	for (int i = 0; i < map->capacity; i++){
-		map->array[i] = list_create(free);
-	}
-
-	map->size = 0;
-
-	for (int i = 0; i < old_capacity; i++){
-		for(ListNode node = list_first(old_array[i]) ;          // ξενικάμε από τον πρώτο κόμβο
-    	node != LIST_EOF;                          // μέχρι να φτάσουμε στο EOF
-    	node = list_next(old_array[i], node)) { 
-			MapNode m = list_node_value(old_array[i],node);
-			Pointer key = map_node_key(map,m);
-			Pointer value = map_node_value(map,m);
-			map_insert(map,key,value);
-		}
-	}
-
-	for(int i = 0 ; i < old_capacity ; i++)
-		list_destroy(old_array[i]);
-
-	free(old_array);
-	return;
-}
 
 // Εισαγωγή στο hash table του ζευγαριού (key, item). Αν το key υπάρχει,
 // ανανέωση του με ένα νέο value, και η συνάρτηση επιστρέφει true.
@@ -128,13 +98,7 @@ void map_insert(Map map, Pointer key, Pointer value) {
 		// Αύξηση του μεγέθους του
 		map->size++;
 	}
-
-	// Αν με την νέα εισαγωγή ξεπερνάμε το μέγιστο load factor, πρέπει να κάνουμε rehash
-	float load_factor = (float)map->size / map->capacity;
-	if (load_factor > MAX_LOAD_FACTOR) {
-		// printf("LOAD FACTOR IS %f\n",load_factor);
-		rehash(map); 
-	}
+	
 }
 
 // Διαργραφή απο το Hash Table του κλειδιού με τιμή key
@@ -154,7 +118,7 @@ bool map_remove(Map map, Pointer key) {
     node = list_next(map->array[bucket], node)) {            
 		m = list_node_value(map->array[bucket],node);
 		int* node_key = map_node_key(map,m );  
-		
+
 		// Μόλις βρεθεί στη λίστα ο κόμβος που θα διαγραφεί
 		// Σε αυτό το σημείο αν είναι ο πρώτος θα διαγραφεί με τη χρήση
 		// της list_remove_next αλλιώς θα προχωρήσει και θα ενημερώσει
@@ -214,12 +178,25 @@ void map_destroy(Map map) {
 
 			// Φέρνουμε στη μνήμη τον αντίστοιχο MapNode που περιέχει        
 			MapNode m = list_node_value(map->array[i],node);
+				Record value = (Record)map_node_value(map, m);
 
 				// Και καταστρέφουμε το περιεχόμενό του
-				if (map->destroy_key != NULL)
+				if (map->destroy_key != NULL){
 					map->destroy_key(m->key);
-				if (map->destroy_value != NULL)
-					map->destroy_value(m->value);
+				}
+				else{
+					free(m->key);
+				}
+			
+				if (map->destroy_value != NULL){
+					map->destroy_value(value->firstName);
+					map->destroy_value(value->lastName);
+				}
+				else{
+					free(value->firstName);
+					free(value->lastName);
+					free(value);
+				}
 			}
 		// Εφόσον αυτό έχει γίνει για κάθε περιεχόμενο κόμβου λίστας 
 		// Ελευθερώνουμε και τη λίστα
