@@ -24,7 +24,7 @@ int compare_recs(Pointer a, Pointer b) {
 int main(int argc, char* argv[]){
     printf("Program run\n");
     
-
+    String main_path = "/home/michalis/Desktop/os_delis/os_project_1/tst/" ;
     String input = NULL;
     String config = NULL;
     // Arguments Section
@@ -41,16 +41,25 @@ int main(int argc, char* argv[]){
             config = strdup(argv[2]);
         }
         else{
+            printf("\033[0;31m");
             printf("Wrong command line arguments.Exiting...\n");
+            printf("\033[0m"); 
             exit(1);
         }
     }
     else{
+        printf("\033[0;31m");
         printf("No command line arguments given\n");
+        printf("\033[0m"); 
         exit(1);
     }
 
-    printf("INPUT: %s\tCONFIGFILE: %s\n",input,config);
+    if( (input != NULL) && (config != NULL) ){
+        printf("\033[0;32m");
+        printf("INPUT: %s\tCONFIGFILE: %s\n",input,config);
+        printf("\033[0m"); 
+
+    }
     // Initial ize input and output file names.
     
     
@@ -61,12 +70,13 @@ int main(int argc, char* argv[]){
     
     invertedIndex ii = invertedIndex_create();
     if(ii!=NULL) printf("Inverted Index created!\n");
-
+    
 
     // First open the file for input.
     FILE *fptr ;
-    fptr = fopen("/home/michalis/Desktop/os_delis/os_project_1/tst/input2.txt" , "r");
     
+    fptr = fopen("/home/michalis/Desktop/os_delis/os_project_1/tst/input2.txt" , "r");
+   
     // Just a check for successfully file opening.
     if(fptr == NULL) {
       perror("Error opening file");
