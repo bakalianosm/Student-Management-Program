@@ -1,0 +1,17 @@
+
+# ignore everything
+
+!*/
+
+# except these 
+
+!*.c
+!*.h
+!*.mk
+!*.jpg
+!*.png
+!Makefile
+!.gitignore
+!README.md
+!.vscode/*.json
+!*.txt
