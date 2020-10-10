@@ -20,6 +20,18 @@ int compare_recs(Pointer a, Pointer b) {
 	return ((Record)a)->StudentID - ((Record)b)->StudentID ;
 }
 
+void rec_destroy_value(Record a){
+
+    free(a->firstName);
+    free(a->lastName);
+    free(a);
+
+}
+
+
+void rec_destroy_key(int* a){
+    free(a);
+}
 
 int main(int argc, char* argv[]){
     printf("Program run\n");
@@ -65,12 +77,12 @@ int main(int argc, char* argv[]){
     
     
     // Initialize the data structures         
-    Map hashTable = map_create(compare_recs,NULL,NULL);
+    Map hashTable = map_create(compare_recs,rec_destroy_key,rec_destroy_value);
     map_set_hash_function(hashTable, hash_int);
     
     invertedIndex ii = invertedIndex_create();
     if(ii!=NULL) printf("Inverted Index created!\n");
-    
+
 
     // First open the file for input.
     FILE *fptr ;
@@ -114,15 +126,21 @@ int main(int argc, char* argv[]){
 
 
         map_insert(hashTable, create_int(r->StudentID) , r);
+        invertedIndex_insert(ii,r);
     }
-    int ht_size = map_size(hashTable);
-    printf("Hash table size is %d.\n", ht_size);
-    // printf("READ %d RECORDS\n",counter);
 
+    // int ht_size = map_size(hashTable);
+    // printf("Hash table size is %d.\n", ht_size);
+    
+    // int size = invertedIndex_size(ii);
+    // printf("Inverted Index size is %d.\n", size);
 
 
     // Free allocated memory.
+    free(input);
+    free(config);
     map_destroy(hashTable);
     invertedIndex_destroy(ii);
     fclose(fptr);
+    
 }
