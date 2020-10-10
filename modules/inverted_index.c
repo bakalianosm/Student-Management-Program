@@ -14,6 +14,16 @@ struct index_node{
     int year;
     List indexList;
 };
+void rec_destroy(Record a){
+    free(a->firstName);
+    free(a->lastName);
+    free(a);
+}
+void indexNode_destroy(indexNode a){
+
+    list_destroy(a->indexList);
+    free(a);
+}
 
 int compare_index_nodes(Pointer a, Pointer b){
 	return ((indexNode)a)->year - ((indexNode)b)->year;
@@ -33,36 +43,40 @@ int invertedIndex_size(invertedIndex ii){
 
 void invertedIndex_insert(invertedIndex ii , Record rec){
     
-    // The main creterio to insert a record inside the inverted index 
-    // is the year . We have to find the list that contains the records 
-    // with the inserting record's year and, then to insert it . 
-
-    
-    // First make a node with the current year to insert at the list.
-    indexNode iNode = malloc(sizeof(*iNode));
-    iNode->year = rec->year ;
-    iNode->indexList = list_create(NULL);
+    // First we have to find in which list it has to be stored.
+    indexNode toFind = malloc(sizeof(*toFind));
+    toFind->year =rec->year;
+    toFind->indexList = list_create(NULL);
 
 
-    ListNode lNode = list_find(ii->list, iNode, compare_index_nodes);
+    indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
 
-    if(lNode==NULL){
-        // that means that now is the first time that we see this year
-        // we have to isert the node in the list. 
 
-        // first insert the record in the nested list
+    if(iNode!=NULL){
+        printf("Exists node with this year.Insert the record");
         list_insert_next(iNode->indexList, LIST_EOF, rec);
-
-        //and then insert the List node at the inverted indexes list
-
-        list_insert_next(ii->list, LIST_EOF, iNode);
-
     }
     else{
-        // if there is a node that contains records by this year.
-        list_insert_next(iNode->indexList, LIST_EOF, rec);
+        printf("Doesn't exist node with this year.Let's create it!\n");
+        indexNode new = malloc(sizeof(*new));
+        new->year = rec->year;
+        new->indexList = list_create(NULL);
+        list_insert_next(new->indexList, LIST_EOF, rec);
+        list_insert_next(ii->list, LIST_EOF, new);
 
-        
     }
+
+
+    list_destroy(toFind->indexList);
+    free(toFind);
+}
+
+
+void invertedIndex_destroy(invertedIndex ii){
+
+    
+    
+    list_destroy(ii->list);
+    free(ii);
 
 }
