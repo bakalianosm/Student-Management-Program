@@ -146,154 +146,159 @@ int main(int argc, char* argv[]){
     
     char str[BUFFER_SIZE];
 
-    fgets(str, BUFFER_SIZE, stdin);
-    if(strcmp("exit", str)==0){
-        printf("Choosen option is EXIT\n");
-        exit(0);
-    }
-    else{
-        MapNode m;
-        char ch;
-        int *pId;
-        char option = str[0];
-        int id;
-        // int year;
-        // printf("you given this input : %s\n",str);
-        if (option=='i'){
-            printf("selected option is INSERTION\n");
-            printf("%s", str);
-            // char ch ;
-            // Initialize the record to insert
-
-            Record r = malloc(sizeof(*r)); 
-            
-
-            char lastname[20];
-            char firstname[20];
-            int zip;
-            int year;
-            float gpa;
-
-            //printf("string is %s\n",str);
-            sscanf(str, " %c %d %s %s %d %d %f", &ch,&id, lastname,firstname, &zip, &year, &gpa);
-
-            //printf("specs are %c %d %s %s %d %d %.1f \n", ch,id,lastname,firstname,zip,year,gpa);
-            // i 1700269 bakalianos michail 15772 2017 6.2
-            // int* pId = create_int(id);
-            pId = create_int(id);
-            // MapNode m  = map_find_node(hashTable, pId);
-            m  = map_find_node(hashTable, pId);
-            if (m==NULL){
-                r->StudentID = id;
-                r->lastName = strdup(lastname);
-                r->firstName = strdup(firstname);
-                r->zipNum = zip;
-                r->year = year;
-                r->gpa = gpa;
-                //printf("RECORD :  %d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
-
-                map_insert(hashTable, create_int(r->StudentID) , r);
-                invertedIndex_insert(ii,r);
-                
-                printf("\033[0;32m");
-                printf("Student %d inserted\n",id);
-                printf("\033[0m"); 
-            }
-            else{
-                printf("\033[0;31m");
-                printf("Student %d exists\n", id);
-                printf("\033[0m"); 
-                
-            }
-            free(pId);
-        }
-        else if(option=='l'){
-            printf("selected option is LOOKUP\n");
-            printf("%s", str);
-            sscanf(str, " %c %d ", &ch,&id);
-            pId = create_int(id);
-
-            m = map_find_node(hashTable, pId);
-            if(m!=NULL){
-                Record r = (Record)map_node_value(hashTable, m);
-                printf("\033[0;32m");
-                printf("%d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
-                printf("\033[0m"); 
-            }
-            else{
-                printf("\033[0;31m");
-                printf("Student %d does exists\n", id);
-                printf("\033[0m"); 
-            }
-
-            free(pId);
-        }
-        else if(option=='d'){
-            printf("selected option is DELETE\n");
-            // printf("%s", str);
-            sscanf(str, " %c %d ", &ch,&id);
-            pId = create_int(id);
-            if(map_remove(hashTable, pId)) {
-                // invertedIndex_delete(ii,rec);
-                printf("inverted index size is %d\n", invertedIndex_size(ii));
-                printf("Hash size is %d\n", map_size(hashTable));
-                printf("\033[0;32m");
-                printf("Record %d deleted\n",id);
-                printf("\033[0m"); 
-            }
-            else{
-                printf("\033[0;31m");
-                printf("Student %d does exists\n", id);
-                printf("\033[0m"); 
-            } 
-            free(pId);
-
-        }
-        else if(option=='n'){
-            int year;
-            printf("Selected option is number year\n");
-            sscanf(str, " %c %d ", &ch,&year);
-            printf("%d students in %d\n",invertedIndex_yearCount(ii,year),year);
-
-        }
-        else if(option=='t'){
-
-        }
-        else if(option=='a'){
-
-        }
-        else if(option=='m'){
-
-        }
-        else if(option=='c'){
-            printf("selected option is COUNT\n");
-            printf("%s", str);
-            sscanf(str, " %c", &ch);
-            invertedIndex_count(ii);
-            
-
-        }
-        else if(option=='p'){
-
-        }
-        else{
-            printf("\033[1;31m");
-            printf("Command not found\n");
-            printf("\033[0m"); 
+    while(fgets(str, BUFFER_SIZE, stdin)!=0){
+        if(strcmp("exit", str)==0){
+            printf("Choosen option is EXIT\n");
             exit(0);
         }
-        
-        
-        
-        
-        
-        // if(pId!=NULL) free(pId);
+        else{
+            MapNode m;
+            char ch;
+            int *pId;
+            char option = str[0];
+            int id;
+            // int year;
+            // printf("you given this input : %s\n",str);
+            if (option=='i'){
+                printf("selected option is INSERTION\n");
+                printf("%s", str);
+                // char ch ;
+                // Initialize the record to insert
+
+                Record r = malloc(sizeof(*r)); 
                 
 
-    }
+                char lastname[20];
+                char firstname[20];
+                int zip;
+                int year;
+                float gpa;
+
+                //printf("string is %s\n",str);
+                sscanf(str, " %c %d %s %s %d %d %f", &ch,&id, lastname,firstname, &zip, &year, &gpa);
+
+                //printf("specs are %c %d %s %s %d %d %.1f \n", ch,id,lastname,firstname,zip,year,gpa);
+                // i 1700269 bakalianos michail 15772 2017 6.2
+                // int* pId = create_int(id);
+                pId = create_int(id);
+                // MapNode m  = map_find_node(hashTable, pId);
+                m  = map_find_node(hashTable, pId);
+                if (m==NULL){
+                    r->StudentID = id;
+                    r->lastName = strdup(lastname);
+                    r->firstName = strdup(firstname);
+                    r->zipNum = zip;
+                    r->year = year;
+                    r->gpa = gpa;
+                    //printf("RECORD :  %d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
+
+                    map_insert(hashTable, create_int(r->StudentID) , r);
+                    invertedIndex_insert(ii,r);
+                    
+                    printf("\033[0;32m");
+                    printf("Student %d inserted\n",id);
+                    printf("\033[0m"); 
+                }
+                else{
+                    printf("\033[0;31m");
+                    printf("Student %d exists\n", id);
+                    printf("\033[0m"); 
+                    
+                }
+                free(pId);
+            }
+            else if(option=='l'){
+                printf("selected option is LOOKUP\n");
+                printf("%s", str);
+                sscanf(str, " %c %d ", &ch,&id);
+                pId = create_int(id);
+
+                m = map_find_node(hashTable, pId);
+                if(m!=NULL){
+                    Record r = (Record)map_node_value(hashTable, m);
+                    printf("\033[0;32m");
+                    printf("%d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
+                    printf("\033[0m"); 
+                }
+                else{
+                    printf("\033[0;31m");
+                    printf("Student %d does exists\n", id);
+                    printf("\033[0m"); 
+                }
+
+                free(pId);
+            }
+            else if(option=='d'){
+                printf("selected option is DELETE\n");
+                // printf("%s", str);
+                sscanf(str, " %c %d ", &ch,&id);
+                pId = create_int(id);
+                if(map_remove(hashTable, pId)) {
+                    // invertedIndex_delete(ii,rec);
+                    printf("inverted index size is %d\n", invertedIndex_size(ii));
+                    printf("Hash size is %d\n", map_size(hashTable));
+                    printf("\033[0;32m");
+                    printf("Record %d deleted\n",id);
+                    printf("\033[0m"); 
+                }
+                else{
+                    printf("\033[0;31m");
+                    printf("Student %d does exists\n", id);
+                    printf("\033[0m"); 
+                } 
+                free(pId);
+
+            }
+            else if(option=='n'){
+                int year;
+                printf("Selected option is number year\n");
+                sscanf(str, " %c %d ", &ch,&year);
+
+                printf("\033[0;32m");
+                printf("%d students in %d\n",invertedIndex_yearCount(ii,year),year);
+                printf("\033[0m"); 
+
+            }
+            else if(option=='t'){
+
+            }
+            else if(option=='a'){
+
+            }
+            else if(option=='m'){
+
+            }
+            else if(option=='c'){
+                printf("selected option is COUNT\n");
+                printf("%s", str);
+                sscanf(str, " %c", &ch);
+                printf("\033[0;31m");
+                invertedIndex_count(ii);
+                printf("\033[0m"); 
+                printf("\n");
+
+            }
+            else if(option=='p'){
+
+            }
+            else{
+                printf("\033[1;31m");
+                printf("Command not found\n");
+                printf("\033[0m"); 
+                exit(0);
+            }
+            
+            
+            
+            
+            
+            // if(pId!=NULL) free(pId);
+                    
+
+        }
 
     // switch()
-
+    }
     // Free allocated memory.
 
     //printf(" STRUCT SIZE IS : %d", map_size(hashTable));
