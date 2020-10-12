@@ -6,10 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <time.h>
 
 #define BUFFER_SIZE 200 
-
+#define YEAR_LIMIT 8 
 int* create_int(int value) {
 	int* p = malloc(sizeof(int));
 	*p = value;
@@ -35,6 +35,19 @@ void rec_destroy_key(Pointer a){
 int main(int argc, char* argv[]){
     printf("Program run\n");
     
+
+    // Fetch the current year that running the program 
+
+    // time_t s; //, val = 1;
+    // struct tm* current_time;
+    
+    // s = time(NULL);
+    
+    // current_time = localtime(&s);
+    
+    // printf("Current year = %d\n",(current_time->tm_year + 1900));
+
+
     // String main_path = "/home/michalis/Desktop/os_delis/os_project_1/tst/" ;
     String input = NULL;
     String config = NULL;
@@ -192,7 +205,7 @@ int main(int argc, char* argv[]){
                 printf("\033[0m"); 
                 
             }
-            // free(pId);
+            free(pId);
         }
         else if(option=='l'){
             printf("selected option is LOOKUP\n");
@@ -213,7 +226,7 @@ int main(int argc, char* argv[]){
                 printf("\033[0m"); 
             }
 
-            // free(pId);
+            free(pId);
         }
         else if(option=='d'){
             printf("selected option is DELETE\n");
@@ -221,7 +234,7 @@ int main(int argc, char* argv[]){
             sscanf(str, " %c %d ", &ch,&id);
             pId = create_int(id);
             if(map_remove(hashTable, pId)) {
-                invertedIndex_delete(ii,rec);
+                // invertedIndex_delete(ii,rec);
                 printf("inverted index size is %d\n", invertedIndex_size(ii));
                 printf("Hash size is %d\n", map_size(hashTable));
                 printf("\033[0;32m");
@@ -233,9 +246,14 @@ int main(int argc, char* argv[]){
                 printf("Student %d does exists\n", id);
                 printf("\033[0m"); 
             } 
+            free(pId);
 
         }
         else if(option=='n'){
+            int year;
+            printf("Selected option is number year\n");
+            sscanf(str, " %c %d ", &ch,&year);
+            printf("%d students in %d\n",invertedIndex_yearCount(ii,year),year);
 
         }
         else if(option=='t'){
@@ -248,6 +266,11 @@ int main(int argc, char* argv[]){
 
         }
         else if(option=='c'){
+            printf("selected option is COUNT\n");
+            printf("%s", str);
+            sscanf(str, " %c", &ch);
+            invertedIndex_count(ii);
+            
 
         }
         else if(option=='p'){
@@ -264,7 +287,7 @@ int main(int argc, char* argv[]){
         
         
         
-        if(pId!=NULL) free(pId);
+        // if(pId!=NULL) free(pId);
                 
 
     }
