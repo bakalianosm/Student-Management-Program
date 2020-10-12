@@ -104,3 +104,7 @@ Pointer list_node_value(List list, ListNode node);
 // Επιστρέφει τον κόμβο του στοιχείου, ή LIST_EOF αν δεν βρεθεί.
 
 ListNode list_find_node(List list, Pointer value, CompareFunc compare);
+
+
+// Deletes the node node of the list.
+void list_remove(List list, ListNode node);
