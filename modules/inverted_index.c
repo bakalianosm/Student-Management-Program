@@ -12,8 +12,13 @@ struct inverted_index{
 
 struct index_node{
     int year;
+    int yearCount;
     List indexList;
 };
+
+int rec_compare(Pointer a, Pointer b){
+  return ((Record)a)->StudentID - ((Record)b)->StudentID  ;      
+}
 void rec_destroy(Pointer a){
     free( ((Record)a)->firstName);
     free( ((Record)a)->lastName);
@@ -30,10 +35,11 @@ int compare_index_nodes(Pointer a, Pointer b){
 }
 
 
+
 invertedIndex invertedIndex_create(){
     invertedIndex ii = malloc(sizeof(*ii));
     ii->list = list_create(indexNode_destroy);
-    
+    ii->size = 0;
 
     return ii;
 }
@@ -42,12 +48,19 @@ int invertedIndex_size(invertedIndex ii){
     return ii->size;
 }
 
+int indexNode_year(indexNode node){
+    return node->year;
+}
+
+int indexNode_yearCount(indexNode node){
+    return node->yearCount;
+}
 void invertedIndex_insert(invertedIndex ii , Record rec){
     
     
     // First we have to find in which list it has to be stored.
 
-    printf("Inverted index inserting\n");
+    //printf("Inverted index inserting\n");
     indexNode toFind = malloc(sizeof(*toFind));
     toFind->year =rec->year;
 
@@ -55,12 +68,13 @@ void invertedIndex_insert(invertedIndex ii , Record rec){
 
 
     if(iNode!=NULL){
-        printf("Exists node with this year.Insert the record\n");
+        //printf("Exists node with this year.Insert the record\n");
         list_insert_next(iNode->indexList, LIST_EOF, rec);
         ii->size++;
+        iNode->yearCount++;
     }
     else{
-        printf("Doesn't exist node with this year.Let's create it!\n");
+        //printf("Doesn't exist node with this year.Let's create it!\n");
         indexNode new = malloc(sizeof(*new));
         new->year = rec->year;
         // new->indexList = list_create(rec_destroy);
@@ -68,6 +82,7 @@ void invertedIndex_insert(invertedIndex ii , Record rec){
         list_insert_next(new->indexList, LIST_EOF, rec);
         list_insert_next(ii->list, LIST_EOF, new);
         ii->size++;
+        new->yearCount=1 ;
 
     }
 
@@ -79,9 +94,69 @@ void invertedIndex_insert(invertedIndex ii , Record rec){
     // free(toFind);
 }
 
+bool invertedIndex_find( Record rec){
+    return 0;
+}
 
+void invertedIndex_delete(invertedIndex ii,Record rec){
+
+    // indexNode toFind = malloc(sizeof(*toFind));
+    // toFind->year =rec->year;
+
+    // indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
+
+    // if(iNode!=NULL){
+    //     printf("Exists node with this year.Delete the record\n");
+    //     ListNode prev=LIST_BOF;
+    //     for(ListNode node = list_first(iNode->indexList) ;          
+    //         node != LIST_EOF;                          
+    //         node = list_next(iNode->indexList, node)) {            
+                
+	// 	    if(rec_compare( list_node_value(iNode->indexList,node) , rec) ==0) {
+    
+	// 		// Αφαιρούμε τον κόμβο	
+	// 		    list_remove_next(iNode->indexList,prev);
+
+	// 		// Μειώνουμε το μέγεθος
+	// 		    ii->size--;
+	// 	    }
+
+	// 	prev = node;
+	//     }  
+    // }
+    
+
+    // free(toFind);
+}
 void invertedIndex_destroy(invertedIndex ii){
     
     list_destroy(ii->list);
     free(ii);
+}
+
+int invertedIndex_yearCount(invertedIndex ii, int year){
+    indexNode toFind = malloc(sizeof(*toFind));
+    toFind->year = year;
+
+    indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
+    
+
+    free(toFind);
+    if(iNode!=NULL) return iNode->yearCount;
+    else return 0;
+    
+
+    
+}
+
+void invertedIndex_count(invertedIndex ii){
+    for(ListNode node = list_first(ii->list) ;          
+        node != LIST_EOF;                          
+        node = list_next(ii->list, node)) { 
+            indexNode iNode = (indexNode)list_node_value(ii->list,node);
+            int y = indexNode_year(iNode);
+            int yCnt = indexNode_yearCount(iNode);
+            printf("[%d,%d],",y,yCnt);
+    }   
+   
 }
