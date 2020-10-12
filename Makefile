@@ -1,9 +1,10 @@
 
 INCLUDE = include
 MODULES = modules
-#ARGS = tst
+ARGS = -i input1.txt -c configfile.txt
 # compiler
 CC = gcc 
+
 
 # Compile options. Το -I<dir> λέει στον compiler να αναζητήσει εκεί include files
 CFLAGS = -Wall -g -I$(INCLUDE)
