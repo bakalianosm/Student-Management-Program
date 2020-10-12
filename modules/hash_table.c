@@ -6,7 +6,7 @@
 
 #include "hash_table.h"
 #include "linked_list.h"	
-#define FIRST_HASH_SIZE 3
+#define FIRST_HASH_SIZE 30
 // Χρησιμοποιούμε open addressing, οπότε σύμφωνα με την θεωρία, πρέπει πάντα να διατηρούμε
 // τον load factor του  hash table μικρότερο ή ίσο του 0.5, για να έχουμε αποδoτικές πράξεις
 #define MAX_LOAD_FACTOR 0.9
@@ -178,7 +178,7 @@ void map_destroy(Map map) {
 
 			// Φέρνουμε στη μνήμη τον αντίστοιχο MapNode που περιέχει        
 			MapNode m = list_node_value(map->array[i],node);
-				Record value = (Record)map_node_value(map, m);
+				//Record value = (Record)map_node_value(map, m);
 
 				// Και καταστρέφουμε το περιεχόμενό του
 				if (map->destroy_key != NULL){
@@ -189,14 +189,15 @@ void map_destroy(Map map) {
 				}
 			
 				if (map->destroy_value != NULL){
-					map->destroy_value(value->firstName);
-					map->destroy_value(value->lastName);
+					// map->destroy_value(value->firstName);
+					// map->destroy_value(value->lastName);
+					map->destroy_value(m->value);
 				}
-				else{
-					free(value->firstName);
-					free(value->lastName);
-					free(value);
-				}
+				// else{
+				// 	free(value->firstName);
+				// 	free(value->lastName);
+				// 	free(value);
+				// }
 			}
 		// Εφόσον αυτό έχει γίνει για κάθε περιεχόμενο κόμβου λίστας 
 		// Ελευθερώνουμε και τη λίστα
