@@ -20,23 +20,23 @@ int compare_recs(Pointer a, Pointer b) {
 	return ((Record)a)->StudentID - ((Record)b)->StudentID ;
 }
 
-void rec_destroy_value(Record a){
+void rec_destroy_value(Pointer a){
 
-    free(a->firstName);
-    free(a->lastName);
-    free(a);
+    free(((Record)a)->firstName);
+    free(((Record)a)->lastName);
+    free(((Record)a));
 
 }
 
 
-void rec_destroy_key(int* a){
-    free(a);
+void rec_destroy_key(Pointer a){
+    free((int*)a);
 }
 
 int main(int argc, char* argv[]){
     printf("Program run\n");
     
-    String main_path = "/home/michalis/Desktop/os_delis/os_project_1/tst/" ;
+    // String main_path = "/home/michalis/Desktop/os_delis/os_project_1/tst/" ;
     String input = NULL;
     String config = NULL;
     // Arguments Section
@@ -72,7 +72,7 @@ int main(int argc, char* argv[]){
         printf("\033[0m"); 
 
     }
-    // Initial ize input and output file names.
+    // Initialize input and output file names.
     
     
     
@@ -108,10 +108,10 @@ int main(int argc, char* argv[]){
         char firstname[20];
         int zip;
         int year;
-        double gpa;
+        float gpa;
 
 
-        fscanf(fptr, "%d %s %s %d %d %lf", &id, lastname, firstname, &zip, &year, &gpa);
+        fscanf(fptr, "%d %s %s %d %d %f", &id, lastname, firstname, &zip, &year, &gpa);
 
         //printf("DATA ENTERED : %d %s %s %d %d %.2f\n", id, lastname, firstname, zip, year, gpa);
         r->StudentID = id;
@@ -129,14 +129,87 @@ int main(int argc, char* argv[]){
         invertedIndex_insert(ii,r);
     }
 
-    // int ht_size = map_size(hashTable);
-    // printf("Hash table size is %d.\n", ht_size);
-    
-    // int size = invertedIndex_size(ii);
-    // printf("Inverted Index size is %d.\n", size);
 
+    printf("Now it's your choice to interract with this system\n");
+    
+    char str[BUFFER_SIZE];
+
+    fgets(str, BUFFER_SIZE, stdin);
+    if(strcmp("exit", str)==0){
+        printf("Choosen option is EXIT\n");
+        exit(0);
+    }
+    else{
+        char option = str[0];
+        printf("you given this input : %s\n",str);
+        switch(option){
+
+            case 'i' : 
+                printf("selected option is INSERTION\n");
+                printf("%s", str);
+                char ch ;
+                // Initialize the record to insert
+
+                Record r = malloc(sizeof(*r)); 
+                
+                int id;
+                char lastname[20];
+                char firstname[20];
+                int zip;
+                int year;
+                float gpa;
+
+                //printf("string is %s\n",str);
+                sscanf(str, " %c %d %s %s %d %d %f", &ch,&id, lastname,firstname, &zip, &year, &gpa);
+
+                //printf("specs are %c %d %s %s %d %d %.1f \n", ch,id,lastname,firstname,zip,year,gpa);
+                // i 1700269 bakalianos michail 15772 2017 6.2
+                int* pId = create_int(id);
+                MapNode m  = map_find_node(hashTable, pId);
+                if (m==NULL){
+
+                    
+                    r->StudentID = id;
+                    r->lastName = strdup(lastname);
+                    r->firstName = strdup(firstname);
+                    r->zipNum = zip;
+                    r->year = year;
+                    r->gpa = gpa;
+                    //printf("RECORD :  %d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
+
+
+                    map_insert(hashTable, create_int(r->StudentID) , r);
+                    invertedIndex_insert(ii,r);
+                    
+                    printf("\033[0;32m");
+                    printf("Student %d inserted\n",id);
+                    printf("\033[0m"); 
+                }
+                else{
+                    printf("\033[0;31m");
+                    printf("Student %d exists\n", id);
+                    printf("\033[0m"); 
+                    
+                }
+                free(pId);
+                break;
+            
+            case '-l':
+                printf("selected option is LOOKUP\n");
+                printf("%s", str);
+                
+                
+                break;
+
+        }
+
+    }
+
+    // switch()
 
     // Free allocated memory.
+
+    //printf(" STRUCT SIZE IS : %d", map_size(hashTable));
     free(input);
     free(config);
     map_destroy(hashTable);
