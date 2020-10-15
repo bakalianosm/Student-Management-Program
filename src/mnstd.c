@@ -99,8 +99,8 @@ int main(int argc, char* argv[]){
     // First open the file for input.
     FILE *fptr ;
     
-    fptr = fopen("/home/michalis/Desktop/os_delis/os_project_1/tst/input2.txt" , "r");
-   
+    fptr = fopen("/home/michalis/Desktop/OS/os_project_1/tst/input2.txt" , "r");
+    
     // Just a check for successfully file opening.
     if(fptr == NULL) {
       perror("Error opening file");
@@ -146,10 +146,18 @@ int main(int argc, char* argv[]){
     
     char str[BUFFER_SIZE];
 
-    while(fgets(str, BUFFER_SIZE, stdin)!=0){
-        if(strcmp("exit", str)==0){
+    while(fgets(str, BUFFER_SIZE, stdin) !=0 ){
+        if(strcmp("exit\n", str)==0){
+        
             printf("Choosen option is EXIT\n");
-            exit(0);
+            
+            // free(input);
+            // free(config);
+            // map_destroy(hashTable);
+            // invertedIndex_destroy(ii);
+            // fclose(fptr);
+            // exit(EXIT_SUCCESS);
+            break;
         }
         else{
             MapNode m;
@@ -222,7 +230,7 @@ int main(int argc, char* argv[]){
                 }
                 else{
                     printf("\033[0;31m");
-                    printf("Student %d does exists\n", id);
+                    printf("Student %d does not exists\n", id);
                     printf("\033[0m"); 
                 }
 
@@ -253,20 +261,36 @@ int main(int argc, char* argv[]){
                 int year;
                 printf("Selected option is number year\n");
                 sscanf(str, " %c %d ", &ch,&year);
+                
+                int count = invertedIndex_yearCount(ii,year);
+
 
                 printf("\033[0;32m");
-                printf("%d students in %d\n",invertedIndex_yearCount(ii,year),year);
+                count>0 ? printf("%d students in %d\n",count,year) : printf("NO students enrolled in %d\n",year);
                 printf("\033[0m"); 
 
             }
             else if(option=='t'){
+                int num, year;
+                printf("Selected option is top num year\n");
+                sscanf(str, " %c %d %d", &ch,&num, &year);
+                printf("\033[0;32m");
+                invertedIndex_topNstudents(ii,num,year);
+                printf("\033[0m");
 
             }
             else if(option=='a'){
-
+                printf("Selected option is average year\n");
+                int year;
+                sscanf(str, " %c %d", &ch, &year);
+                invertedIndex_averageYear(ii, year);
+                
             }
             else if(option=='m'){
-
+                printf("Selected option is minimum year\n");
+                int year;
+                sscanf(str, " %c %d", &ch, &year);
+                invertedIndex_minimumYear(ii, year);
             }
             else if(option=='c'){
                 printf("selected option is COUNT\n");
@@ -285,7 +309,12 @@ int main(int argc, char* argv[]){
                 printf("\033[1;31m");
                 printf("Command not found\n");
                 printf("\033[0m"); 
-                exit(0);
+                // free(input);
+                // free(config);
+                // map_destroy(hashTable);
+                // invertedIndex_destroy(ii);
+                // fclose(fptr);
+                // exit(EXIT_FAILURE);
             }
             
             
@@ -307,5 +336,6 @@ int main(int argc, char* argv[]){
     map_destroy(hashTable);
     invertedIndex_destroy(ii);
     fclose(fptr);
-    
+    exit(EXIT_SUCCESS);
 }
+

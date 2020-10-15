@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 #include "inverted_index.h"
-
+#define INT_MAX 99999999
 struct inverted_index{
     List list;
     int size ;
@@ -159,4 +159,92 @@ void invertedIndex_count(invertedIndex ii){
             printf("[%d,%d],",y,yCnt);
     }   
    
+}
+
+
+
+void invertedIndex_topNstudents(invertedIndex ii, int num,int year){
+    indexNode toFind = malloc(sizeof(*toFind));
+    toFind->year = year;
+
+    indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
+    
+    if(num < iNode->yearCount){
+
+    }
+    else{
+        for(ListNode node = list_first(iNode->indexList) ;          
+        node != LIST_EOF;                          
+        node = list_next(iNode->indexList, node)) { 
+            Record r = (Record)list_node_value(iNode->indexList, node);
+            printf("RECORD :  %d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
+        }
+    }
+    
+    free(toFind);
+}
+
+void invertedIndex_averageYear(invertedIndex ii, int year){
+    indexNode toFind = malloc(sizeof(*toFind));
+    toFind->year = year;
+
+    indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
+
+    free(toFind);
+    if(iNode!=NULL){
+        float sum = 0.0 ;
+        float avg ;
+        for(ListNode node = list_first(iNode->indexList) ;          
+            node != LIST_EOF;                          
+            node = list_next(iNode->indexList, node)) { 
+                Record r = (Record)list_node_value(iNode->indexList, node);
+                sum += r->gpa ;
+            }
+
+        avg = sum/iNode->yearCount;
+        printf("\033[0;32m");
+        printf("%.2f\n",avg);
+        printf("\033[0m"); 
+    }
+    else{
+        printf("\033[0;31m");
+        printf("No students enrolled in %d\n", year);
+        printf("\033[0m"); 
+    }
+}
+
+void invertedIndex_minimumYear(invertedIndex ii, int year){
+    indexNode toFind = malloc(sizeof(*toFind));
+    toFind->year = year;
+
+    indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
+
+    free(toFind);
+    if(iNode!=NULL){
+        float min = INT_MAX ; 
+        for(ListNode node = list_first(iNode->indexList) ;          
+            node != LIST_EOF;                          
+            node = list_next(iNode->indexList, node)) { 
+                Record r = (Record)list_node_value(iNode->indexList, node);
+                if (r->gpa < min )
+                    min = r->gpa ;    
+        }
+        if(min!=INT_MAX) printf("MINIMUM GPA FOR THIS YEAR IS %.2f\n",min);
+        for(ListNode node = list_first(iNode->indexList) ;          
+            node != LIST_EOF;                          
+            node = list_next(iNode->indexList, node)) { 
+                Record r = (Record)list_node_value(iNode->indexList, node);
+                if (r->gpa == min )
+                    printf("%d,",r->StudentID);    
+        } 
+        printf("\n");  
+    }
+    else{
+        printf("\033[0;31m");
+        printf("No students enrolled in %d\n", year);
+        printf("\033[0m");  
+    }
+    
+
+
 }

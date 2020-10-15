@@ -34,10 +34,18 @@ bool invertedIndex_find(Record rec);
 void invertedIndex_delete(invertedIndex ii,Record rec);
 
 
-// This function returns the count of records are stored for the year
+// This function returns the count of records are stored for the (year)
 int invertedIndex_yearCount(invertedIndex ii, int year);
 
 
 // This function returns the count of records are stored for each year
 void invertedIndex_count(invertedIndex ii);
 
+// This function prints the top (num) students for (year)
+void invertedIndex_topNstudents(invertedIndex ii, int num,int year);
+
+// This function  prints the average GPA for (year) is exists or error message
+void invertedIndex_averageYear(invertedIndex ii, int year);
+
+// This function printfs
+void invertedIndex_minimumYear(invertedIndex ii, int year);
