@@ -107,4 +107,4 @@ ListNode list_find_node(List list, Pointer value, CompareFunc compare);
 
 
 // Deletes the node node of the list.
-void list_remove(List list, ListNode node);
+void list_remove(List list, ListNode node, CompareFunc compare);

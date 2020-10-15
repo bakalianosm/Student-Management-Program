@@ -100,33 +100,20 @@ bool invertedIndex_find( Record rec){
 
 void invertedIndex_delete(invertedIndex ii,Record rec){
 
-    // indexNode toFind = malloc(sizeof(*toFind));
-    // toFind->year =rec->year;
+    indexNode toFind = malloc(sizeof(*toFind));
+    toFind->year =rec->year;
 
-    // indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
+    indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
 
-    // if(iNode!=NULL){
-    //     printf("Exists node with this year.Delete the record\n");
-    //     ListNode prev=LIST_BOF;
-    //     for(ListNode node = list_first(iNode->indexList) ;          
-    //         node != LIST_EOF;                          
-    //         node = list_next(iNode->indexList, node)) {            
-                
-	// 	    if(rec_compare( list_node_value(iNode->indexList,node) , rec) ==0) {
-    
-	// 		// Αφαιρούμε τον κόμβο	
-	// 		    list_remove_next(iNode->indexList,prev);
-
-	// 		// Μειώνουμε το μέγεθος
-	// 		    ii->size--;
-	// 	    }
-
-	// 	prev = node;
-	//     }  
-    // }
+    if(iNode!=NULL){
+        
+    }
+    else{
+        printf("Not found year ")
+    }
     
 
-    // free(toFind);
+    free(toFind);
 }
 void invertedIndex_destroy(invertedIndex ii){
     
