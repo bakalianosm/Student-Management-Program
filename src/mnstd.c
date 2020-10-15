@@ -151,13 +151,12 @@ int main(int argc, char* argv[]){
         
             printf("Choosen option is EXIT\n");
             
-            // free(input);
-            // free(config);
-            // map_destroy(hashTable);
-            // invertedIndex_destroy(ii);
-            // fclose(fptr);
-            // exit(EXIT_SUCCESS);
-            break;
+            free(input);
+            free(config);
+            map_destroy(hashTable);
+            invertedIndex_destroy(ii);
+            fclose(fptr);
+            exit(EXIT_SUCCESS);
         }
         else{
             MapNode m;
@@ -331,11 +330,11 @@ int main(int argc, char* argv[]){
     // Free allocated memory.
 
     //printf(" STRUCT SIZE IS : %d", map_size(hashTable));
-    free(input);
-    free(config);
-    map_destroy(hashTable);
-    invertedIndex_destroy(ii);
-    fclose(fptr);
-    exit(EXIT_SUCCESS);
+    // free(input);
+    // free(config);
+    // map_destroy(hashTable);
+    // invertedIndex_destroy(ii);
+    // fclose(fptr);
+    // exit(EXIT_SUCCESS);
 }
 
