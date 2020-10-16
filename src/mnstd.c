@@ -44,7 +44,6 @@ bool checkString(char *str, int num) {
         token = strtok(NULL, s);
         counter+=1;
     }
-    printf("%d\n", counter);
     if(counter != num)
         return false;
     return true;
@@ -53,8 +52,6 @@ bool checkString(char *str, int num) {
 
 
 int main(int argc, char* argv[]){
-    printf("Program run\n");
-    
 
     // Fetch the current year that running the program 
     String input = NULL;
@@ -77,18 +74,23 @@ int main(int argc, char* argv[]){
             exit(1);
         }
     }
-    else{
+    else if(argc < 5){
         printf("\033[0;31m");
-        printf("No command line arguments given\n");
+        printf("To few command line arguments given\n");
+        printf("\033[0m"); 
+        exit(1);
+    }
+    else if(argc >5){
+        printf("\033[0;31m");
+        printf("To many command line arguments given\n");
         printf("\033[0m"); 
         exit(1);
     }
 
     if( (input != NULL) && (config != NULL) ){
-        printf("\033[0;32m");
-        printf("INPUT: %s\tCONFIGFILE: %s\n",input,config);
+        printf("\033[1;34m");
+        printf("Input file: %s\tConfigfile: %s\n",input,config);
         printf("\033[0m"); 
-
     }
 
     // Initialize the data structures         
@@ -99,24 +101,35 @@ int main(int argc, char* argv[]){
     if(ii == NULL || hashTable == NULL) exit(EXIT_FAILURE);
 
 
-    // First open the file for input.
-    FILE *fptr ;
-    fptr = fopen(input,"r");
+    // First open the files for input & configuration.
+    FILE *input_fptr , *config_fptr;
+    input_fptr = fopen(input,"r");
+    config_fptr = fopen(config,"r");
 
     // Just a check for successfully file opening.
-    if(fptr == NULL) {
-      perror("Error opening file");
+    if(input_fptr == NULL) {
+      perror("Error opening input file");
       return(-1);
     }
     else{
         printf("\033[0;32m");
-        printf("File opened successfully!\n");
+        printf("Input file opened successfully!\n");
         printf("\033[0m");
     }
 
+    if(config_fptr == NULL) {
+      perror("Error opening configurationfile");
+      return(-1);
+    }
+    else{
+        printf("\033[0;32m");
+        printf("Configuration file opened successfully!\n");
+        printf("\033[0m");
+    }
+    
     // Fetch lines of file.
     int counter = 0;
-    while(!feof(fptr)){
+    while(!feof(input_fptr)){
         
         // First allocate a new Record 
         Record r = malloc(sizeof(*r)); 
@@ -128,7 +141,7 @@ int main(int argc, char* argv[]){
         float gpa;
 
         // Fill it's fields with the parsed data
-        fscanf(fptr, "%d %s %s %d %d %f", &id, lastname, firstname, &zip, &year, &gpa);
+        fscanf(input_fptr, "%d %s %s %d %d %f", &id, lastname, firstname, &zip, &year, &gpa);
 
         r->StudentID = id;
         r->lastName =  strdup(lastname);
@@ -162,7 +175,8 @@ int main(int argc, char* argv[]){
             if(config!=NULL) free(config);
             map_destroy(hashTable);
             invertedIndex_destroy(ii);
-            fclose(fptr);
+            fclose(input_fptr);
+            fclose(config_fptr);
             exit(EXIT_SUCCESS);
         }
         else{
