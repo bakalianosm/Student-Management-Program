@@ -3,7 +3,7 @@ INCLUDE = include
 MODULES = modules
 TEST = tst
 CONFIGURE = configs
-# ARGS = -i $(TEST)/input3000.txt -c $(CONFIGURE)/configfile1.txt
+ARGS = -i $(TEST)/input3000.txt -c $(CONFIGURE)/configfile1.txt
 # compiler
 CC = gcc 
 

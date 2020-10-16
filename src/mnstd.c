@@ -127,6 +127,14 @@ int main(int argc, char* argv[]){
         printf("\033[0m");
     }
     
+
+    // Configuration file contains HT number .
+    
+    // int hash_size ;
+    // fscanf(input_fptr, "%d",&hash_size);
+    // printf("hash size from config file is %d", hash_size);
+
+
     // Fetch lines of file.
     int counter = 0;
     while(!feof(input_fptr)){
