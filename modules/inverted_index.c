@@ -17,7 +17,11 @@ struct index_node{
     List indexList;
 };
 
-
+int record_gpa(Record a ){
+    if(a->gpa !=0 ) 
+        return a->gpa ;
+    return 0 ; 
+}
 
 int rec_compare(Pointer a, Pointer b){
   return ((Record)a)->StudentID - ((Record)b)->StudentID  ;      
@@ -109,19 +113,17 @@ void invertedIndex_delete(invertedIndex ii,int id, int year){
     indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
 
     if(iNode!=NULL){
-        list_remove(iNode->indexList, create_int(id) , rec_compare);
+        // list_remove(iNode->indexList, create_int(id) , rec_compare);
         printf("Record removed form inverted index\n");
         ii->size--;
     }
     else{
         printf("Not found year \n");
     }
-    
-
     free(toFind);
 }
 void invertedIndex_destroy(invertedIndex ii){
-    
+
     list_destroy(ii->list);
     free(ii);
 }
@@ -182,7 +184,6 @@ void invertedIndex_averageYear(invertedIndex ii, int year){
 
     indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
 
-    free(toFind);
     if(iNode!=NULL){
         float sum = 0.0 ;
         float avg ;
@@ -190,7 +191,7 @@ void invertedIndex_averageYear(invertedIndex ii, int year){
             node != LIST_EOF;                          
             node = list_next(iNode->indexList, node)) { 
                 Record r = (Record)list_node_value(iNode->indexList, node);
-                sum += r->gpa ;
+                sum += record_gpa(r) ;
             }
 
         avg = sum/iNode->yearCount;
@@ -203,6 +204,9 @@ void invertedIndex_averageYear(invertedIndex ii, int year){
         printf("No students enrolled in %d\n", year);
         printf("\033[0m"); 
     }
+
+    free(toFind);
+
 }
 
 void invertedIndex_minimumYear(invertedIndex ii, int year){
@@ -211,7 +215,6 @@ void invertedIndex_minimumYear(invertedIndex ii, int year){
 
     indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
 
-    free(toFind);
     if(iNode!=NULL){
         float min = INT_MAX ; 
         for(ListNode node = list_first(iNode->indexList) ;          
@@ -238,5 +241,5 @@ void invertedIndex_minimumYear(invertedIndex ii, int year){
     }
     
 
-
+    free(toFind);
 }

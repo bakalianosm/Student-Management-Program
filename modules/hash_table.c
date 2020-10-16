@@ -6,7 +6,7 @@
 
 #include "hash_table.h"
 #include "linked_list.h"	
-#define FIRST_HASH_SIZE 30
+#define FIRST_HASH_SIZE 100
 // Χρησιμοποιούμε open addressing, οπότε σύμφωνα με την θεωρία, πρέπει πάντα να διατηρούμε
 // τον load factor του  hash table μικρότερο ή ίσο του 0.5, για να έχουμε αποδoτικές πράξεις
 #define MAX_LOAD_FACTOR 0.9

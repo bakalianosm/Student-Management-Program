@@ -1,3 +1,7 @@
+#pragma once
+#include <string.h>
+#include "common_types.h"
+
 int* create_int(int value) ;
 
 

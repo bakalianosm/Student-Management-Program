@@ -2,7 +2,6 @@
 // this module contains common functions for all the structures.
 
 #include "general_functions.h"
-#include "common_types.h"
 #include <stdlib.h>
 
 int* create_int(int value) {
