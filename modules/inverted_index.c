@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include "inverted_index.h"
+
 #define INT_MAX 99999999
 struct inverted_index{
     List list;
@@ -109,7 +110,7 @@ void invertedIndex_delete(invertedIndex ii,Record rec){
         
     }
     else{
-        printf("Not found year ")
+        printf("Not found year ");
     }
     
 
