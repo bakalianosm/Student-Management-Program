@@ -17,6 +17,8 @@ struct index_node{
     List indexList;
 };
 
+
+
 int rec_compare(Pointer a, Pointer b){
   return ((Record)a)->StudentID - ((Record)b)->StudentID  ;      
 }
@@ -99,18 +101,20 @@ bool invertedIndex_find( Record rec){
     return 0;
 }
 
-void invertedIndex_delete(invertedIndex ii,Record rec){
+void invertedIndex_delete(invertedIndex ii,int id, int year){
 
     indexNode toFind = malloc(sizeof(*toFind));
-    toFind->year =rec->year;
+    toFind->year =year;
 
     indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
 
     if(iNode!=NULL){
-        
+        list_remove(iNode->indexList, create_int(id) , rec_compare);
+        printf("Record removed form inverted index\n");
+        ii->size--;
     }
     else{
-        printf("Not found year ");
+        printf("Not found year \n");
     }
     
 

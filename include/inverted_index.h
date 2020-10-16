@@ -19,6 +19,7 @@ invertedIndex invertedIndex_create();
 
 // This function returns the number of records that are stored
 // in the inverted index
+
 int invertedIndex_size(invertedIndex ii);
 
 // This function inserts the given record inside the proper list 
@@ -31,7 +32,7 @@ void invertedIndex_destroy(invertedIndex ii);
 bool invertedIndex_find(Record rec);
 
 // This function is used to delete a record
-void invertedIndex_delete(invertedIndex ii,Record rec);
+void invertedIndex_delete(invertedIndex ii,int id, int year);
 
 
 // This function returns the count of records are stored for the (year)
