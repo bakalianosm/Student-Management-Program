@@ -24,13 +24,3 @@ struct record {
 };
 
 typedef struct record* Record;
-
-// a function that compares ints 
-int compare_recs(Pointer a, Pointer b);
-
-// a function that compares records by year.
-int compare_year(Pointer a, Pointer b);
-
-// char* load_file(char const* path);
-
-
