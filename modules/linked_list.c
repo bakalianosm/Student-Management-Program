@@ -158,13 +158,13 @@ ListNode list_find_node(List list, Pointer value, CompareFunc compare) {
 	return NULL;	// δεν υπάρχει
 }
 
-void list_remove(List list, ListNode dnode, CompareFunc compare){
+void list_remove(List list, Pointer value, CompareFunc compare){
 	ListNode prev=LIST_BOF;
 	for(ListNode node = list_first(list) ;          
 		node != LIST_EOF;                          
 		node = list_next(list, node)) {            
 			
-		if(compare( dnode->value, node->value) ==0) {
+		if(compare( value, node->value) ==0) {
 
 		// Αφαιρούμε τον κόμβο	
 			list_remove_next(list,prev);
@@ -172,6 +172,6 @@ void list_remove(List list, ListNode dnode, CompareFunc compare){
 		// Μειώνουμε το μέγεθος
 			list->size--;
 		}
-	prev = node;
+		prev = node;
 	}  
 }
