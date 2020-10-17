@@ -136,11 +136,14 @@ int main(int argc, char* argv[]){
 
 
     // Fetch lines of file.
+    int doublicates = 0;
     int counter = 0;
+    int *inID;
     while(!feof(input_fptr)){
         
         // First allocate a new Record 
-        Record r = malloc(sizeof(*r)); 
+        
+        
         int id;
         char lastname[20];
         char firstname[20];
@@ -148,9 +151,20 @@ int main(int argc, char* argv[]){
         int year;
         float gpa;
 
+        
         // Fill it's fields with the parsed data
         fscanf(input_fptr, "%d %s %s %d %d %f", &id, lastname, firstname, &zip, &year, &gpa);
 
+        inID = create_int(id);
+        MapNode m = map_find_node(hashTable, inID);
+
+        if(m!=MAP_EOF) {
+            doublicates++ ;
+            free(inID);
+            continue;
+        }
+
+        Record r = malloc(sizeof(*r)); 
         r->StudentID = id;
         r->lastName =  strdup(lastname);
         r->firstName = strdup(firstname);
@@ -159,13 +173,14 @@ int main(int argc, char* argv[]){
         r->gpa = gpa;
         
         // Increase record counter 
-        counter++;
-
         // And then insert the record inside the Data Structures i made
         map_insert(hashTable, create_int(r->StudentID) , r);
         invertedIndex_insert(ii,r);
+        free(inID);
+    
     }
 
+    
 
     // In this section I read the instructions from the keyboard and print the 
     // suitable message . That's the system - human interraction
@@ -173,6 +188,11 @@ int main(int argc, char* argv[]){
 
     char str[BUFFER_SIZE];
     
+    printf("Doublicates counted : %d \n", doublicates);
+    printf("\033[1;34m");
+    printf("\nNow it's time for you to interract with the system\n");
+    printf("\033[0m"); 
+
     // This while loop runs until the user type "exit" 
     while(fgets(str, BUFFER_SIZE, stdin) !=0 ){
         if(strcmp("exit\n", str)==0){
@@ -204,8 +224,8 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-                    printf("selected option is INSERTION\n");
-                    printf("%s", str);
+                    // printf("selected option is INSERTION\n");
+                    // printf("%s", str);
                     // char ch ;
                     // Initialize the record to insert
 
@@ -258,8 +278,8 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-                    printf("selected option is LOOKUP\n");
-                    printf("%s", str);
+                    // printf("selected option is LOOKUP\n");
+                    // printf("%s", str);
                     sscanf(str, " %c %d ", &ch,&id);
                     pId = create_int(id);
 
@@ -285,7 +305,7 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-                    printf("selected option is DELETE\n");
+                    // printf("selected option is DELETE\n");
                     sscanf(str, " %c %d ", &ch,&id);
                     int year ;
                     pId = create_int(id);
@@ -301,7 +321,7 @@ int main(int argc, char* argv[]){
                     
                     if(map_remove(hashTable, pId)) {
                         
-                        printf("inverted index size is %d\n", invertedIndex_size(ii));
+                        printf("Inverted index size is %d\n", invertedIndex_size(ii));
                         printf("Hash size is %d\n", map_size(hashTable));
                         printf("\033[0;32m");
                         printf("Record %d deleted\n",id);
@@ -326,10 +346,7 @@ int main(int argc, char* argv[]){
                     int year;
                     // printf("Selected option is number year\n");
                     sscanf(str, " %c %d ", &ch,&year);
-                    
                     int count = invertedIndex_yearCount(ii,year);
-
-
                     printf("\033[0;32m");
                     count>0 ? printf("%d students in %d\n",count,year) : printf("NO students enrolled in %d\n",year);
                     printf("\033[0m"); 
