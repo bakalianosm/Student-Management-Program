@@ -320,9 +320,8 @@ int main(int argc, char* argv[]){
                     }
                     
                     if(map_remove(hashTable, pId)) {
-                        
-                        printf("Inverted index size is %d\n", invertedIndex_size(ii));
-                        printf("Hash size is %d\n", map_size(hashTable));
+                        // printf("Inverted index size is %d\n", invertedIndex_size(ii));
+                        // printf("Hash size is %d\n", map_size(hashTable));
                         printf("\033[0;32m");
                         printf("Record %d deleted\n",id);
                         printf("\033[0m"); 
