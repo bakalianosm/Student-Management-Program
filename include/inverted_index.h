@@ -48,5 +48,11 @@ void invertedIndex_topNstudents(invertedIndex ii, int num,int year);
 // This function  prints the average GPA for (year) is exists or error message
 void invertedIndex_averageYear(invertedIndex ii, int year);
 
-// This function printfs
+// This function prints the students with the minimum gpa
 void invertedIndex_minimumYear(invertedIndex ii, int year);
+
+// This function finds the maximum gpa in a list
+float findMax(List list);
+
+// This function removes a specific node
+void removeNode(List list, int max);
