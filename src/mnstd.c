@@ -1,12 +1,15 @@
 
-#include "common_types.h"
-#include "hash_table.h"
-#include "inverted_index.h"
-#include "linked_list.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include "common_types.h"
+#include "general_functions.h"
+#include "hash_table.h"
+#include "inverted_index.h"
+#include "linked_list.h"
 
 #define BUFFER_SIZE 200 
 
