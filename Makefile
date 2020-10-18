@@ -26,7 +26,7 @@ clean:
 	rm -f $(OBJS) $(EXEC)
 
 run: $(EXEC)
-	./$(EXEC) $(ARGS)
+	time ./$(EXEC) $(ARGS)
 
 
 valgrind: $(EXEC)
