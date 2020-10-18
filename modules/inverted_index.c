@@ -128,7 +128,6 @@ void invertedIndex_delete(invertedIndex ii,int id, int year){
     if(iNode!=NULL){
         ListNode prev = LIST_BOF ;
         // Remove the current record from the nested list 
-        printf("inside the inode\n");
         // First, find the record in the list
         for(ListNode node = list_first(iNode->indexList) ;          
             node != LIST_EOF;                          
@@ -228,7 +227,6 @@ void invertedIndex_topNstudents(invertedIndex ii, int num,int year){
     }
 
     if(num < iNode->yearCount){
-        printf("will be repeated for %d times\n",num);
         for(int i = 0 ; i < num ; i++){
             ListNode prev = LIST_BOF;
             float max = findMax(tempList);
@@ -282,8 +280,6 @@ void invertedIndex_averageYear(invertedIndex ii, int year){
             }
         
         // Calculate the average and print it.
-        avg = sum/list_size(iNode->indexList);
-        printf("sum is %f",sum);
         printf("\033[0;32m");
         printf("%.2f\n",avg);
         printf("\033[0m"); 

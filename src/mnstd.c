@@ -185,7 +185,7 @@ int main(int argc, char* argv[]){
 
     char str[BUFFER_SIZE];
     
-    printf("%d dublicated records found and not inserted \n", doublicates);
+    printf("%d Dublicated records found and not inserted \n", doublicates);
     printf("\033[1;34m");
     printf("\nNow it's time for you to interract with the system\n");
     printf("\033[0m"); 
@@ -235,14 +235,9 @@ int main(int argc, char* argv[]){
                     int year;
                     float gpa;
 
-                    //printf("string is %s\n",str);
                     sscanf(str, " %c %d %s %s %d %d %f", &ch,&id, lastname,firstname, &zip, &year, &gpa);
-
-                    //printf("specs are %c %d %s %s %d %d %.1f \n", ch,id,lastname,firstname,zip,year,gpa);
-                    // i 1700269 bakalianos michail 15772 2017 6.2
-                    // int* pId = create_int(id);
                     pId = create_int(id);
-                    // MapNode m  = map_find_node(hashTable, pId);
+                    
                     m  = map_find_node(hashTable, pId);
                     if (m==NULL){
                         r->StudentID = id;
@@ -302,7 +297,6 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-                    // printf("selected option is DELETE\n");
                     sscanf(str, " %c %d ", &ch,&id);
                     int year ;
                     pId = create_int(id);
@@ -310,7 +304,6 @@ int main(int argc, char* argv[]){
                     if(m!=NULL) { 
                         Record r = (Record)map_node_value(hashTable, m);
                         year  = r->year;
-                        printf("year is %d\n",year);
                     }
                     else{
                         year = 0 ;
@@ -338,7 +331,6 @@ int main(int argc, char* argv[]){
                 }
                 else{
                     int year;
-                    // printf("Selected option is number year\n");
                     sscanf(str, " %c %d ", &ch,&year);
                     int count = invertedIndex_yearCount(ii,year);
                     printf("\033[0;32m");
@@ -355,7 +347,6 @@ int main(int argc, char* argv[]){
                 }
                 else{
                     int num, year;
-                    // printf("Selected option is top num year\n");
                     sscanf(str, " %c %d %d", &ch,&num, &year);
                     printf("\033[0;32m");
                     printf("num is %d year is %d \n",num,year);
@@ -371,7 +362,6 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-                    // printf("Selected option is average year\n");
                     int year;
                     sscanf(str, " %c %d", &ch, &year);
                     invertedIndex_averageYear(ii, year);
