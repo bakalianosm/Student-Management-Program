@@ -9,46 +9,6 @@
 #include <time.h>
 
 #define BUFFER_SIZE 200 
-#define YEAR_LIMIT 8 
-int* create_int(int value) {
-	int* p = malloc(sizeof(int));
-	*p = value;
-	return p;
-}
-
-int compare_recs(Pointer a, Pointer b) {	return ((Record)a)->StudentID - ((Record)b)->StudentID ;
-}
-
-void rec_destroy_value(Pointer a){
-
-    free(((Record)a)->firstName);
-    free(((Record)a)->lastName);
-    free(((Record)a));
-
-}
-
-
-void rec_destroy_key(Pointer a){
-    free((int*)a);
-}
-
-bool checkString(char *str, int num) {
-    int counter = 0;
-    char *token;
-    char s[2] = " ";
-    char temp[100];
-    strcpy(temp, str);
-    token = strtok(temp, s);
-    /* walk through other tokens */
-    while( token != NULL ) {
-        token = strtok(NULL, s);
-        counter+=1;
-    }
-    if(counter != num)
-        return false;
-    return true;
-}
-
 
 
 int main(int argc, char* argv[]){
@@ -138,7 +98,7 @@ int main(int argc, char* argv[]){
     int *inID;
     while(!feof(input_fptr)){
         
-        // First allocate a new Record 
+        // Initialize some variables 
         
         
         int id;
@@ -149,7 +109,7 @@ int main(int argc, char* argv[]){
         float gpa;
 
         
-        // Fill it's fields with the parsed data
+        // Fill variable's fields with the parsed data
         fscanf(input_fptr, "%d %s %s %d %d %f", &id, lastname, firstname, &zip, &year, &gpa);
 
         inID = create_int(id);
@@ -161,6 +121,7 @@ int main(int argc, char* argv[]){
             continue;
         }
 
+        // Initialize Record values 
         Record r = malloc(sizeof(*r)); 
         r->StudentID = id;
         r->lastName =  strdup(lastname);
@@ -168,8 +129,7 @@ int main(int argc, char* argv[]){
         r->zipNum = zip;
         r->year = year;
         r->gpa = gpa;
-        
-        // Increase record counter 
+         
         // And then insert the record inside the Data Structures i made
         map_insert(hashTable, create_int(r->StudentID) , r);
         invertedIndex_insert(ii,r);
@@ -270,8 +230,6 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-                    // printf("selected option is LOOKUP\n");
-                    // printf("%s", str);
                     sscanf(str, " %c %d ", &ch,&id);
                     pId = create_int(id);
 
@@ -397,7 +355,8 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-
+                    
+                    
                 }
             }
             else{

@@ -3,7 +3,7 @@ INCLUDE = include
 MODULES = modules
 TEST = tst
 CONFIGURE = configs
-ARGS = -i $(TEST)/input300000.txt -c $(CONFIGURE)/configfile300000.txt
+ARGS = -i $(TEST)/input300.txt -c $(CONFIGURE)/configfile300.txt
 # compiler
 CC = gcc 
 
@@ -13,7 +13,7 @@ CFLAGS = -Wall -g -I$(INCLUDE)
 LDFLAGS = -lm
 
 # Αρχεία .o
-OBJS = src/mnstd.o $(MODULES)/hash_table.o  $(MODULES)/inverted_index.o  $(MODULES)/linked_list.o  # $(MODULES)/general_functions.o 
+OBJS = src/mnstd.o $(MODULES)/hash_table.o  $(MODULES)/inverted_index.o  $(MODULES)/linked_list.o  $(MODULES)/general_functions.o 
 
 # Το εκτελέσιμο πρόγραμμα
 EXEC = mnstd

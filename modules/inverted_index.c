@@ -19,7 +19,6 @@ struct inverted_index{
 // contains year ,year count and a list of records assigned to each year
 struct index_node{
     int year;
-    int yearCount;
     List indexList;
 };
 
@@ -65,9 +64,7 @@ int indexNode_year(indexNode node){
     return node->year;
 }
 
-int indexNode_yearCount(indexNode node){
-    return node->yearCount;
-}
+
 void invertedIndex_insert(invertedIndex ii , Record rec){
     
     
@@ -87,7 +84,6 @@ void invertedIndex_insert(invertedIndex ii , Record rec){
         // Insert the record at the end of the indexNodes list
         list_insert_next(iNode->indexList, LIST_EOF, rec);
         ii->size++;
-        iNode->yearCount++;
     }
     else{
         // If there is no indexNode with the records year, we have to make 
@@ -104,8 +100,6 @@ void invertedIndex_insert(invertedIndex ii , Record rec){
         list_insert_next(ii->list, LIST_EOF, new);
         ii->size++;
 
-        // Set the count 1
-        new->yearCount=1 ;
 
     }
 
@@ -163,7 +157,7 @@ int invertedIndex_yearCount(invertedIndex ii, int year){
     
 
     free(toFind);
-    if(iNode!=NULL) return iNode->yearCount;
+    if(iNode!=NULL) return list_size(iNode->indexList);
     else return 0;
     
 
@@ -179,7 +173,7 @@ void invertedIndex_count(invertedIndex ii){
         node = list_next(ii->list, node)) { 
             indexNode iNode = (indexNode)list_node_value(ii->list,node);
             int y = indexNode_year(iNode);
-            int yCnt = indexNode_yearCount(iNode);
+            int yCnt = list_size(iNode->indexList);
             printf("[%d,%d],",y,yCnt);
     }   
    
@@ -226,7 +220,7 @@ void invertedIndex_topNstudents(invertedIndex ii, int num,int year){
             list_insert_next(tempList,LIST_EOF,r);
     }
 
-    if(num < iNode->yearCount){
+    if(num < list_size(iNode->indexList)){
 
         for(int i = 0 ; i < num ; i++){
             ListNode prev = LIST_BOF;
@@ -322,9 +316,11 @@ void invertedIndex_minimumYear(invertedIndex ii, int year){
                 node != LIST_EOF;                          
                 node = list_next(iNode->indexList, node)) { 
                     Record r = (Record)list_node_value(iNode->indexList, node);
-                    if (r->gpa == min )
+                    if (r->gpa == min ){
+                        printf("\033[0;32m");
                         printf("%d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
-
+                        printf("\033[0m"); 
+                    }
             } 
         }
         printf("\n");  

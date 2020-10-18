@@ -203,6 +203,7 @@ void map_destroy(Map map) {
 	free(map);
 }
 
+
 /////////////////////// Iterate through the map///////////////////////////
 
 MapNode map_first(Map map) {
