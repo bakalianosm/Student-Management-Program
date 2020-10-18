@@ -334,10 +334,9 @@ int main(int argc, char* argv[]){
                     sscanf(str, " %c %d ", &ch,&year);
                     int count = invertedIndex_yearCount(ii,year);
                     printf("\033[0;32m");
-                    count>0 ? printf("%d students in %d\n",count,year) : printf("NO students enrolled in %d\n",year);
+                    count>0 ? printf("%d students in %d\n",count,year) : printf("NO students enrolled in %d\n",year);           
                     printf("\033[0m"); 
                 }
-
             }
             else if(option=='t'){
                 bool check = checkString(str,3);
@@ -348,8 +347,7 @@ int main(int argc, char* argv[]){
                 else{
                     int num, year;
                     sscanf(str, " %c %d %d", &ch,&num, &year);
-                    printf("\033[0;32m");
-                    printf("num is %d year is %d \n",num,year);
+                    printf("\033[0;32m");   
                     invertedIndex_topNstudents(ii,num,year);
                     printf("\033[0m");
                 }
