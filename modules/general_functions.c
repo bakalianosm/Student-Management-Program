@@ -22,19 +22,19 @@ void rec_destroy_value(Pointer a){
 
 }
 
-
 void rec_destroy_key(Pointer a){
     free((int*)a);
 }
 
-bool checkString(char *str, int num) {
+bool checkString(String str, int num) {
     int cnt = 0;
-    char *tok, s[2] = " ", temp[100];
+    String tok;
+    char delim[2] = " ", temp[200];
     strcpy(temp, str);
-    tok = strtok(temp, s);
+    tok = strtok(temp, delim);
 
     while( tok != NULL ) {
-        tok = strtok(NULL, s);
+        tok = strtok(NULL, delim);
         cnt++;
     }
 
@@ -43,5 +43,4 @@ bool checkString(char *str, int num) {
     
     return true;
 }
-
 

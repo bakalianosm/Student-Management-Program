@@ -41,7 +41,7 @@ void list_destroy(List list);
 
 
 // List Iterate /////////////////////////////////////////////
-//
+
 
 // Returns the first node of the list, or LIST_EOF if the list is empty
 

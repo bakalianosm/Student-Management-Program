@@ -15,11 +15,14 @@
 
 int main(int argc, char* argv[]){
 
+
+
     // Fetch the current year that running the program 
     String input = NULL;
     String config = NULL;
 
     // Arguments Section
+
     if(argc==5){
         if( (strcmp(argv[1], "-i")==0) && (strcmp(argv[3], "-c")==0)  ){
             input = strdup(argv[2]);
@@ -57,8 +60,8 @@ int main(int argc, char* argv[]){
 
     // First open the files for input & configuration.
     FILE *input_fptr , *config_fptr;
-    input_fptr = fopen(input,"r");
-    config_fptr = fopen(config,"r");
+    if(input!=NULL) input_fptr = fopen(input,"r");
+    if(config!=NULL)config_fptr = fopen(config,"r");
 
     // Just a check for successfully file opening.
     if(input_fptr == NULL) {
@@ -183,11 +186,7 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-                    // printf("selected option is INSERTION\n");
-                    // printf("%s", str);
-                    // char ch ;
-                    // Initialize the record to insert
-
+                   
                     Record r = malloc(sizeof(*r)); 
                     
 

@@ -1,5 +1,5 @@
 
-#pragma once // #include το πολύ μία φορά
+#pragma once 
 
 #include "common_types.h"
 
@@ -63,9 +63,8 @@ typedef uint (*HashFunc)(Pointer);
 
 
 // Implemented hash functions
-uint hash_string(Pointer value);		// Χρήση όταν το key είναι char*
-uint hash_int(Pointer value);			// Χρήση όταν το key είναι int*
-uint hash_pointer(Pointer value);		// Χρήση όταν το key είναι pointer που θεωρείται διαφορετικός από οποιονδήποτε άλλο pointer
+
+uint hash_int(Pointer value);			
 
 // Sets the hash function
 void map_set_hash_function(Map map, HashFunc hash_func);

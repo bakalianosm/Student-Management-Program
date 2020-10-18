@@ -182,15 +182,8 @@ void map_destroy(Map map) {
 				}
 			
 				if (map->destroy_value != NULL){
-					// map->destroy_value(value->firstName);
-					// map->destroy_value(value->lastName);
 					map->destroy_value(m->value);
 				}
-				// else{
-				// 	free(value->firstName);
-				// 	free(value->lastName);
-				// 	free(value);
-				// }
 			}
 		// Destroy the current list
 		list_destroy(map->array[i]);
@@ -277,18 +270,7 @@ void map_set_hash_function(Map map, HashFunc func) {
 	map->hash_function = func;
 }
 
-uint hash_string(Pointer value) {
-	// djb2 hash function,
-    uint hash = 5381;
-    for (char* s = value; *s != '\0'; s++)
-		hash = (hash << 5) + hash + *s;			// hash = (hash * 33) + *s. Το foo << 5 is the fastest version of  foo * 32.
-    return hash;
-}
-
 uint hash_int(Pointer value) {
 	return *(int*)value;
 }
 
-uint hash_pointer(Pointer value) {
-	return (size_t)value;				
-}
