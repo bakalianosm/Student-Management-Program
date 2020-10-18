@@ -91,15 +91,7 @@ int main(int argc, char* argv[]){
         printf("\033[1;34m");
         printf("Input file: %s\tConfigfile: %s\n",input,config);
         printf("\033[0m"); 
-    }
-
-    // Initialize the data structures         
-    Map hashTable = map_create(compare_recs,rec_destroy_key,rec_destroy_value);
-    map_set_hash_function(hashTable, hash_int);
-    
-    invertedIndex ii = invertedIndex_create();
-    if(ii == NULL || hashTable == NULL) exit(EXIT_FAILURE);
-
+    }    
 
     // First open the files for input & configuration.
     FILE *input_fptr , *config_fptr;
@@ -128,16 +120,21 @@ int main(int argc, char* argv[]){
     }
     
 
-    // Configuration file contains HT number .
+    // Configuration file contains HT size number .
+    char hash_size_str[10];
+    fgets(hash_size_str ,10, config_fptr);
+    int hash_size = atoi(hash_size_str);
     
-    // int hash_size ;
-    // fscanf(input_fptr, "%d",&hash_size);
-    // printf("hash size from config file is %d", hash_size);
 
+    // Initialize the data structures         
+    Map hashTable = map_create(compare_recs,hash_size,rec_destroy_key,rec_destroy_value);
+    map_set_hash_function(hashTable, hash_int);
+    
+    invertedIndex ii = invertedIndex_create();
+    if(ii == NULL || hashTable == NULL) exit(EXIT_FAILURE);
 
     // Fetch lines of file.
     int doublicates = 0;
-    int counter = 0;
     int *inID;
     while(!feof(input_fptr)){
         
@@ -188,7 +185,7 @@ int main(int argc, char* argv[]){
 
     char str[BUFFER_SIZE];
     
-    printf("Doublicates counted : %d \n", doublicates);
+    printf("%d dublicated records found and not inserted \n", doublicates);
     printf("\033[1;34m");
     printf("\nNow it's time for you to interract with the system\n");
     printf("\033[0m"); 
@@ -318,10 +315,8 @@ int main(int argc, char* argv[]){
                     else{
                         year = 0 ;
                     }
-                    
+                    invertedIndex_delete(ii,id,year);
                     if(map_remove(hashTable, pId)) {
-                        // printf("Inverted index size is %d\n", invertedIndex_size(ii));
-                        // printf("Hash size is %d\n", map_size(hashTable));
                         printf("\033[0;32m");
                         printf("Record %d deleted\n",id);
                         printf("\033[0m"); 
@@ -363,6 +358,7 @@ int main(int argc, char* argv[]){
                     // printf("Selected option is top num year\n");
                     sscanf(str, " %c %d %d", &ch,&num, &year);
                     printf("\033[0;32m");
+                    printf("num is %d year is %d \n",num,year);
                     invertedIndex_topNstudents(ii,num,year);
                     printf("\033[0m");
                 }
@@ -400,7 +396,7 @@ int main(int argc, char* argv[]){
                     continue;
                 }
                 else{
-                    printf("\033[0;31m");
+                    printf("\033[0;32m");
                     invertedIndex_count(ii);
                     printf("\033[0m"); 
                     printf("\n");
