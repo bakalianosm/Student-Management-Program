@@ -5,33 +5,31 @@
 #include "linked_list.h"
 
 
-// Ενα List είναι pointer σε αυτό το struct
+// A list is a pointer to this struct
 struct list {
-	ListNode dummy;				// χρησιμοποιούμε dummy κόμβο, ώστε ακόμα και η κενή λίστα να έχει έναν κόμβο.
-	ListNode last;				// δείκτης στον τελευταίο κόμβο, ή στον dummy (αν η λίστα είναι κενή)
-	int size;					// μέγεθος, ώστε η list_size να είναι Ο(1)
-	DestroyFunc destroy_value;	// Συνάρτηση που καταστρέφει ένα στοιχείο της λίστας.
+	ListNode dummy;				// dummy node 
+	ListNode last;				// pointer to the last node 
+	int size;					
+	DestroyFunc destroy_value;	
 };
 
 struct list_node {
-	ListNode next;		// Δείκτης στον επόμενο
-	Pointer value;		// Η τιμή που αποθηκεύουμε στον κόμβο
+	ListNode next;		
+	Pointer value;		
 };
 
 
 List list_create(DestroyFunc destroy_value) {
-	// Πρώτα δημιουργούμε το stuct
+	// First allocate the memory that is needed to represent a list
 	List list = malloc(sizeof(*list));
 	list->size = 0;
 	list->destroy_value = destroy_value;
 
-	// Χρησιμοποιούμε dummy κόμβο, ώστε ακόμα και μια άδεια λίστα να έχει ένα κόμβο
-	// (απλοποιεί τους αλγορίθμους). Οπότε πρέπει να τον δημιουργήσουμε.
-	//
+	// initialize dummy node 
 	list->dummy = malloc(sizeof(*list->dummy));
-	list->dummy->next = NULL;		// άδεια λίστα, ο dummy δεν έχει επόμενο
-
-	// Σε μια κενή λίστα, τελευταίος κόμβος είναι επίσης ο dummy
+	list->dummy->next = NULL;	
+	
+	// the list is empty, then the last node is the dummy node (or the first ;) )
 	list->last = list->dummy;
 
 	return list;
@@ -42,44 +40,42 @@ int list_size(List list) {
 }
 
 void list_insert_next(List list, ListNode node, Pointer value) {
-	// Αν το node είναι NULL απλά εισάγουμε μετά τον dummy κόμβο!
-	// Αυτή ακριβώς είναι η αξία του dummy, δε χρειαζόμαστε ξεχωριστή υλοποίηση.
+
+	// if the node is NULL then insert after the dummy node 
 	if (node == NULL)
 		node = list->dummy;
 
-	// Δημιουργία του νέου κόμβου
+	// Crete a new node
 	ListNode new = malloc(sizeof(*new));
 	new->value = value;
 
-	// Σύνδεση του new ανάμεσα στο node και το node->next
+	// Connect the next of the given node with the node we made
 	new->next = node->next;
 	node->next = new;
 
-	// Ενημέρωση των size & last
+	// Update the size
 	list->size++;
 	if (list->last == node)
 		list->last = new;
 }
 
 void list_remove_next(List list, ListNode node) {
-	// Αν το node είναι NULL απλά διαγράφουμε μετά τον dummy κόμβο!
-	// Αυτή ακριβώς είναι η αξία του dummy, δε χρειαζόμαστε ξεχωριστή υλοποίηση.
+	// if the node is NULL then remove the next after the dummy
+
 	if (node == NULL)
 		node = list->dummy;
 
-	// Ο κόμβος προς διαγραφή είναι ο επόμενος του node, ο οποίος πρέπει να υπάρχει
+	// The node to be deletet is the next of the given node 
 	ListNode removed = node->next;
-	//assert(removed != NULL);		// LCOV_EXCL_LINE
 
 	if (list->destroy_value != NULL)
 		list->destroy_value(removed->value);
 
-	// Σύνδεση του node με τον επόμενο του removed
-	node->next = removed->next;		// πριν το free!
+	node->next = removed->next;		
 
 	free(removed);
 
-	// Ενημέρωση των size & last
+	// Update the size
 	list->size--;
 	if (list->last == removed)
 		list->last = node;
@@ -97,14 +93,11 @@ DestroyFunc list_set_destroy_value(List list, DestroyFunc destroy_value) {
 }
 
 void list_destroy(List list) {
-	// Διασχίζουμε όλη τη λίστα και κάνουμε free όλους τους κόμβους,
-	// συμπεριλαμβανομένου και του dummy!
-	//
+	// Iterate through the list 
 	ListNode node = list->dummy;
-	while (node != NULL) {				// while αντί για for, γιατί θέλουμε να διαβάσουμε
-		ListNode next = node->next;		// το node->next _πριν_ κάνουμε free!
-
-		// Καλούμε τη destroy_value, αν υπάρχει (προσοχή, όχι στον dummy!)
+	while (node != NULL) {				
+		ListNode next = node->next;		
+		// Call the destroy value  function , even if the node is not the dummy 
 		if (node != list->dummy && list->destroy_value != NULL)
 			list->destroy_value(node->value);
 
@@ -112,24 +105,21 @@ void list_destroy(List list) {
 		node = next;
 	}
 
-	// Τέλος free το ίδιο το struct
+	// Free the struct 
 	free(list);
 }
 
 
-// Διάσχιση της λίστας /////////////////////////////////////////////
+// List iteration /////////////////////////////////////////////
 
 ListNode list_first(List list) {
-	// Ο πρώτος κόμβος είναι ο επόμενος του dummy.
-	//
+	// The first node is the next of the dummy 
 	return list->dummy->next;
 }
 
 ListNode list_last(List list) {
-	// Προσοχή, αν η λίστα είναι κενή το last δείχνει στον dummy, εμείς όμως θέλουμε να επιστρέψουμε NULL, όχι τον dummy!
-	//
 	if (list->last == list->dummy)
-		return LIST_EOF;		// κενή λίστα
+		return LIST_EOF;		// the list is empty 
 	else
 		return list->last;
 }
@@ -149,29 +139,11 @@ Pointer list_node_value(List list, ListNode node) {
 }
 
 ListNode list_find_node(List list, Pointer value, CompareFunc compare) {
-	// διάσχιση όλης της λίστας, καλούμε την compare μέχρι να επιστρέψει 0
-	//
+	// Iterate through the list untill we find a node with the given value
 	for (ListNode node = list->dummy->next; node != NULL; node = node->next)
 		if (compare(value, node->value) == 0)
-			return node;		// βρέθηκε
+			return node;		// we found it!
 
-	return NULL;	// δεν υπάρχει
+	return NULL;	// Dont exists
 }
 
-// void list_remove(List list, Pointer value, CompareFunc compare){
-// 	ListNode prev=LIST_BOF;
-// 	for(ListNode node = list_first(list) ;          
-// 		node != LIST_EOF;                          
-// 		node = list_next(list, node)) {            
-			
-// 		if(compare( value, node->value) ==0) {
-
-// 		// Αφαιρούμε τον κόμβο	
-// 			list_remove_next(list,prev);
-
-// 		// Μειώνουμε το μέγεθος
-// 			list->size--;
-// 		}
-// 		prev = node;
-// 	}  
-// }
