@@ -6,17 +6,15 @@
 
 #include "hash_table.h"
 #include "linked_list.h"	
-#define FIRST_HASH_SIZE 10000
-// Χρησιμοποιούμε open addressing, οπότε σύμφωνα με την θεωρία, πρέπει πάντα να διατηρούμε
-// τον load factor του  hash table μικρότερο ή ίσο του 0.5, για να έχουμε αποδoτικές πράξεις
-#define MAX_LOAD_FACTOR 0.9
+
+
 
 struct map_node{
 	Pointer key;		
 	Pointer value;  	
 } ;
 
-// Δομή του Map (περιέχει όλες τις πληροφορίες που χρεαζόμαστε για το HashTable)
+// The hash table structure
 struct map {
 	List* array;				// The array of lists that implements the map
 	int capacity;				
@@ -32,7 +30,6 @@ Map map_create(CompareFunc compare,int hash_size, DestroyFunc destroy_key, Destr
 	// First allocate the memory that is needed hash table
 	Map map = malloc(sizeof(*map));
 	map->capacity = hash_size;
-	printf("Map allocated with %d hash size\n",hash_size);
 	map->array = malloc(map->capacity * sizeof(List));
 
 	// First initialize the lists that will be used 
