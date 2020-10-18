@@ -120,11 +120,11 @@ int main(int argc, char* argv[]){
     }
     
 
-    // Configuration file contains HT size number .
+    // Configuration file contains HT number .
     char hash_size_str[10];
     fgets(hash_size_str ,10, config_fptr);
     int hash_size = atoi(hash_size_str);
-    
+    printf("Hash size from config file is %d\n", hash_size);
 
     // Initialize the data structures         
     Map hashTable = map_create(compare_recs,hash_size,rec_destroy_key,rec_destroy_value);
@@ -132,7 +132,7 @@ int main(int argc, char* argv[]){
     
     invertedIndex ii = invertedIndex_create();
     if(ii == NULL || hashTable == NULL) exit(EXIT_FAILURE);
-
+    
     // Fetch lines of file.
     int doublicates = 0;
     int *inID;
