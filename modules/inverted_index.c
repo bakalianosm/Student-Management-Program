@@ -203,6 +203,7 @@ float findMax(List list){
                     Record r = (Record)list_node_value(list, node);
                     if (r->gpa == max ){
                         printf("%d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
+                        break;
                     }  
             } 
         }
@@ -226,7 +227,6 @@ void invertedIndex_topNstudents(invertedIndex ii, int num,int year){
             list_insert_next(tempList,LIST_EOF,r);
     }
 
-    int max = INT_MIN ;
     if(num < iNode->yearCount){
         printf("will be repeated for %d times\n",num);
         for(int i = 0 ; i < num ; i++){
@@ -240,7 +240,7 @@ void invertedIndex_topNstudents(invertedIndex ii, int num,int year){
                     list_remove_next(tempList, prev);
                     break;
                 }
-                    prev = node ;
+                prev = node ;
             }
         }
 
