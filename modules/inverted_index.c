@@ -134,10 +134,7 @@ void invertedIndex_delete(invertedIndex ii,int id, int year){
                 prev = node ;
         }
     }
-    else{
-        printf("Not found year \n");
-    }
-
+    
     // Deallocate unused Pointers
     free(toFind);
 }
@@ -168,6 +165,12 @@ void invertedIndex_count(invertedIndex ii){
     // Iterate throught the Inverted Index Nodes and for each
     // year return its count and then print it 
 
+    if( invertedIndex_size(ii)==0 ) {
+        printf("\033[0;31m");
+        printf("No students enrolled \n");
+        printf("\033[0m"); 
+        return;
+    }
     for(ListNode node = list_first(ii->list) ;          
         node != LIST_EOF;                          
         node = list_next(ii->list, node)) { 
@@ -206,47 +209,65 @@ float findMax(List list){
 }
 
 void invertedIndex_topNstudents(invertedIndex ii, int num,int year){
+
+    // First we have to find in which list students with "year" are stored.
+    // We make a temporary indexNode only to use in the compare function
     indexNode toFind = malloc(sizeof(*toFind));
     toFind->year = year;
 
     indexNode iNode = (indexNode)list_find(ii->list, toFind, compare_index_nodes);
     
+    // If exists node with students with year "year"
+    if(iNode!=NULL){
 
-    List tempList = list_create(NULL);
-    for(ListNode node = list_first(iNode->indexList) ;          
-        node != LIST_EOF;                          
-        node = list_next(iNode->indexList, node)) { 
-            Record r = (Record)list_node_value(iNode->indexList, node);
-            list_insert_next(tempList,LIST_EOF,r);
-    }
+        // create a new temporary list  as a copy of students with "year" year.
+        List tempList = list_create(NULL);
+        for(ListNode node = list_first(iNode->indexList) ;          
+            node != LIST_EOF;                          
+            node = list_next(iNode->indexList, node)) { 
+                Record r = (Record)list_node_value(iNode->indexList, node);
+                list_insert_next(tempList,LIST_EOF,r);
+        }
 
-    if(num < list_size(iNode->indexList)){
-
-        for(int i = 0 ; i < num ; i++){
-            ListNode prev = LIST_BOF;
-            float max = findMax(tempList);
-            for(ListNode node = list_first(tempList) ;          
-                node != LIST_EOF;                          
-                node = list_next(tempList, node)) { 
-                Record r = (Record)list_node_value(tempList, node); 
-                if (r->gpa == max){
-                    list_remove_next(tempList, prev);
-                    break;
+        
+        if(num < list_size(iNode->indexList)){
+            // For n times 
+            for(int i = 0 ; i < num ; i++){
+                ListNode prev = LIST_BOF;
+                // find the record with the max GPA of the temporary list
+                float max = findMax(tempList);
+                // and then , remove it from  the list and continue
+                // with the next execution
+                for(ListNode node = list_first(tempList) ;          
+                    node != LIST_EOF;                          
+                    node = list_next(tempList, node)) { 
+                    Record r = (Record)list_node_value(tempList, node); 
+                    if (r->gpa == max){
+                        list_remove_next(tempList, prev);
+                        break;
+                    }
+                    prev = node ;
                 }
-                prev = node ;
+            }
+
+        }
+        else{
+            // If the number of top students that we want is greater than the number of 
+            // students that are enrolled for this "year" , just print all the recs
+            for(ListNode node = list_first(iNode->indexList) ;          
+            node != LIST_EOF;                          
+            node = list_next(iNode->indexList, node)) { 
+                Record r = (Record)list_node_value(iNode->indexList, node);
+                printf("%d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
             }
         }
-
+        list_destroy(tempList);
     }
     else{
-        for(ListNode node = list_first(iNode->indexList) ;          
-        node != LIST_EOF;                          
-        node = list_next(iNode->indexList, node)) { 
-            Record r = (Record)list_node_value(iNode->indexList, node);
-            printf("RECORD :  %d %s %s %d %d %.1f\n",r->StudentID,r->firstName,r->lastName,r->zipNum,r->year,r->gpa);
-        }
+        printf("\033[0;31m");
+        printf("No students enrolled in %d\n", year);
+        printf("\033[0m");  
     }
-    list_destroy(tempList);
     free(toFind);
 }
 
@@ -311,7 +332,10 @@ void invertedIndex_minimumYear(invertedIndex ii, int year){
                 if (r->gpa < min )
                     min = r->gpa ;    
         }
+        // If the min found
         if(min!=INT_MAX){
+            // Iterate throught the list to find the records that has the minimum GPA
+            // note : it's possible for >1 records to have the minimum GPA 
             for(ListNode node = list_first(iNode->indexList) ;          
                 node != LIST_EOF;                          
                 node = list_next(iNode->indexList, node)) { 
