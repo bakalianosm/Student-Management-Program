@@ -3,7 +3,7 @@ INCLUDE = include
 MODULES = modules
 TEST = tst
 CONFIGURE = configs
-ARGS = -i $(TEST)/input300.txt -c $(CONFIGURE)/configfile300.txt
+ARGS = -i $(TEST)/input300000.txt -c $(CONFIGURE)/configfile300000.txt
 # compiler
 CC = gcc 
 
@@ -18,7 +18,6 @@ OBJS = src/mnstd.o $(MODULES)/hash_table.o  $(MODULES)/inverted_index.o  $(MODUL
 # Το εκτελέσιμο πρόγραμμα
 EXEC = mnstd
 
-
 $(EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $(EXEC) $(LDFLAGS)
 
@@ -28,6 +27,11 @@ clean:
 run: $(EXEC)
 	time ./$(EXEC) $(ARGS)
 
-
 valgrind: $(EXEC)
 	valgrind ./$(EXEC) $(ARGS)
+
+run_no_args: $(EXEC)
+	time ./$(EXEC) 
+
+valgrind_no_args: $(EXEC)
+	valgrind ./$(EXEC) 
