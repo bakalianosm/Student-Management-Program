@@ -60,7 +60,7 @@ Either the program run with input either without input , it has implemented a co
 
 #### Acceptable Commands and their use
 
-1. i(nsert) studentid lastname firstname zip year gpa: εισήγαγε στην δομή ένα φοιτητή με κλειδί
+ 1. i(nsert) studentid lastname firstname zip year gpa: εισήγαγε στην δομή ένα φοιτητή με κλειδί
 studentid που έχει εισαχθεί το έτος year, έχει μόνιμη κατοικία στον Τ.Κ. zip και έχει μέσο όρο μέχρι
 στιγμής gpa. Επανάληψη εισαγωγής εγγραφής με υπάρχον κλειδί studentid στην δομή δεν είναι εφικτή
 και σχετική ένδειξη λάθους εμφανίζεται στην έξοδο.
