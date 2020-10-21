@@ -9,8 +9,9 @@
 </h1>
 
 
-This is a **Data Structures** based project , that is implemented by a Hash Table and and Inverted Index as you can see at the following picture .
-
+<p align="center">
+ This is a **Data Structures** based project , that is implemented by a Hash Table and and Inverted Index as you can see at the following picture .
+</p>
 
 <p align="center">
   <img width="650" height="400" src="images/structures.png">
