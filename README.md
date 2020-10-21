@@ -60,29 +60,23 @@ Either the program run with input either without input , it has implemented a co
 
 #### Acceptable Commands and their use
 
- 1. i(nsert) studentid lastname firstname zip year gpa: εισήγαγε στην δομή ένα φοιτητή με κλειδί
-studentid που έχει εισαχθεί το έτος year, έχει μόνιμη κατοικία στον Τ.Κ. zip και έχει μέσο όρο μέχρι
-στιγμής gpa. Επανάληψη εισαγωγής εγγραφής με υπάρχον κλειδί studentid στην δομή δεν είναι εφικτή
-και σχετική ένδειξη λάθους εμφανίζεται στην έξοδο.
+ 1. **i**(nsert) studentid lastname firstname zip year gpa: this command inserts a record to the structures.
 
-2. l(ook-up) studentid: ανάκτησε και τύπωσε στην εγγραφή του εν λόγω φοιτητή στο tty. Αν δεν
-υπάρχει, τύπωσε σχετικό μήνυμα.
+2. l(ook-up) studentid: this command searches for a student with "studentid" StudentID.
 
-3. d(elete) studentid: διέγραψε από την δομή την/τον φοιτήτρια/φοιτητή με αριθμό studentid. Αν δεν
-υπάρχει τέτοια εγγραφή, τύπωσε σχετικό μήνυμα.
+3. d(elete) studentid: this command deletes both of the structures the student with "studentid" StudentID , if exists.
 
-4. n(umber) year: για την ακαδημαϊκή χρονιά year βρες πόσοι παραμένουν εγγεγραμμένοι. Στο ΕΚΠΑ
-εγγεγραμμένος μπορεί να παραμείνει κάποιος χωρίς περιορισμό. Η εντολή αυτή βρίσκει πόσοι φοιτητές
-συνεχίζουν να δραστηριοποιούνται πχ. στο 6ο χρόνο, κλπ.
+4. n(umber) year: for the academic year "year" find how many students are enrolled .
 
-5. t(op) num year: για την ακαδημαϊκή χρονιά year βρες τους num φοιτητές με την καλύτερη απόδοση.
-6. a(verage) year: για την ακαδημαϊκή χρονιά year βρες τους τον μέσο όρο.
+5. t(op) num year: this command finds the top "num" students for "year" year , based on their GPA.
 
-7. m(inimum) year: για την ακαδημαϊκή χρονιά year βρες την/τον φοιτήτρια/φοιτητή με το μικρότερο μέσο
-όρο.
+6. a(verage) year: this command finds the average GPA for "year" year.
 
-8. c(ount): για κάθε έτος φοίτησης βρες τον αριθμό των φοιτητών που υπάρχουν στην δομή.
+7. m(inimum) year: this command finds the student with the smallest GPA for "year" year.
+
+8. c(ount): for each year find how many students are enrolled.
+
+9. exit: terminates the main program and deallocate all the memory that allocated dynamically.
 
 
-9. exit: το πρόγραμμα τερματίζει αφού απελευθερώσει με συγκροτημένο τρόπο όλο το χώρο που έχει
-καταλάβει στην μνήμη.
+
