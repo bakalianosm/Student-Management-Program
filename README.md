@@ -10,4 +10,4 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 </p>
 
 
-<p align="center"> <h3> Repo explanation </h3> </p> 
+<p align="center"> Repo explanation </p> 
