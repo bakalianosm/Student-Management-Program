@@ -11,7 +11,7 @@
 This is a **Data Structures** based project , that is implemented by a Hash Table and and Inverted Index as you can see at the following picture .
 
 <p align="center"> 
- <img width="800" height="500" src="images/structures.png">
+ <img width="900" height="500" src="images/structures.png">
 </p>
 
 
