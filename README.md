@@ -6,5 +6,5 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 
 
 <p align="center">
-  <img width="650" height="400" src="structures.png">
+  <img width="650" height="400" src="images/structures.png">
 </p>
