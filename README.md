@@ -17,9 +17,44 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 
 ### General Info About **Student Management** 
 
+
+#### What does the Structures contain ?
 Both stuctures contain students' information as a struct named record and for each Student contains its :
 * Student ID
 * Registation Year
 * First Name
 * Last Name
 * GPA
+
+#### How does these Structures hold data ?
+Data are stored in the Hash table with key their **StudentID**
+Data are stored in the Inverted Index by their **Registration Year**
+
+#### How can I run the program ? 
+For this question I have 2 answers.
+If you want to run the program with input files that are stored in **tst** folder , either interract without input files.
+
+For the first choice : just clone the repo and type :
+``` 
+make run
+```
+ and 
+ 
+``` 
+make valgrind
+```
+ Either if you want run with the current input file (input300000) type:
+```
+make run_no_args
+```
+and 
+```
+make valgrind_no_args
+```
+All the above commands compile and run the main program.
+The commands that contain *valgrind* , use the [valgrind](https://valgrind.org/) debugger.
+
+
+#### How can I interract with the program.
+Either the program run with input either without input , it has implemented a command interface that allows user to interract and do querries on it.
+
