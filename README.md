@@ -15,4 +15,11 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 </p>
 
 
-### General Info About **Student Management**
+### General Info About **Student Management** 
+
+Both stuctures contain students' information as a struct named record and for each Student contains its :
+* Student ID
+* Registation Year
+* First Name
+* Last Name
+* GPA
