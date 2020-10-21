@@ -15,4 +15,4 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 </p>
 
 
-## General Info About **Student Management**
+### General Info About **Student Management**
