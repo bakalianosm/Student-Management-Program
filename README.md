@@ -16,8 +16,10 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 
 
 ### General Info About **Student Management** 
+* **"include"** folder 
 
-
+#### What does this repository contains ?
+This repository as you can see 
 #### What does the Structures contain ?
 Both stuctures contain students' information as a struct named record and for each Student contains its :
 * Student ID
