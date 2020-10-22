@@ -50,9 +50,7 @@ make run
 make valgrind
 ```
  Either if you want run with the current input file (input300000) type:
-```
-make run_no_args
-```
+``` make run_no_args ```
 and 
 ```
 make valgrind_no_args
