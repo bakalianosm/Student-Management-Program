@@ -16,11 +16,11 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 
 
 ### General Info About **Student Management** 
-* **configs** folder
-* **include"** folder 
-* **modules** folder 
-* **src** folder
-* **tst** folder
+* **configs** folder : configuration files. Files that in this project set the size of buckets that the Hash Table contains.
+* **include"** folder : contains header files 
+* **modules** folder : contains data structures source files
+* **src** folder : contains the main programs mnstd and mnstd_only_args ( *this file is used to run only with CL arguments* )
+* **tst** folder : contains input files.
 
 #### What does this repository contains ?
 This repository as you can see 
