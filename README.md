@@ -16,14 +16,15 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 
 
 ### General Info About **Student Management** 
+
+
+#### What does this repository contains ?
 * **configs** folder : configuration files. Files that in this project set the size of buckets that the Hash Table contains.
 * **include"** folder : contains header files 
 * **modules** folder : contains data structures source files
 * **src** folder : contains the main programs mnstd and mnstd_only_args ( *this file is used to run only with CL arguments* )
 * **tst** folder : contains input files.
 
-#### What does this repository contains ?
-This repository as you can see 
 #### What does the Structures contain ?
 Both stuctures contain students' information as a struct named record and for each Student contains its :
 * Student ID
@@ -61,7 +62,6 @@ make valgrind_no_args
 ```
 All the above commands compile and run the main program.
 The commands that contain *valgrind* , use the [valgrind](https://valgrind.org/) debugger.
-
 
 #### How can I interract with the program ?
 Either the program run with input either without input , it has implemented a command interface that allows user to interract and do querries on it.
