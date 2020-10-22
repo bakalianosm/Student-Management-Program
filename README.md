@@ -30,7 +30,9 @@ Both stuctures contain students' information as a struct named record and for ea
 * Registation Year
 * First Name
 * Last Name
+* ZIP number 
 * GPA
+
 
 #### How does these Structures hold data ?
 Data are stored in the Hash table with key their **StudentID**
