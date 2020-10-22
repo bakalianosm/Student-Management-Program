@@ -16,7 +16,11 @@ This is a **Data Structures** based project , that is implemented by a Hash Tabl
 
 
 ### General Info About **Student Management** 
-* **"include"** folder 
+* **configs** folder
+* **include"** folder 
+* **modules** folder 
+* **src** folder
+* **tst** folder
 
 #### What does this repository contains ?
 This repository as you can see 
