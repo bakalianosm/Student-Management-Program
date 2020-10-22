@@ -8,7 +8,7 @@
  <h1>Student Management using Data Structures </h1> 
 </p> 
 
-This is a **Data Structures** based project , that is implemented by a Hash Table and and Inverted Index as you can see at the following picture .
+This is a **Data Structures** based project , that is implemented by a **Hash Table** and and **Inverted Index** as you can see in the following picture .
 
 <p align="center"> 
  <img width="800" height="500" src="images/structures.png">
