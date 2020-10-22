@@ -68,21 +68,21 @@ Either the program run with input either without input , it has implemented a co
 
  1. **i**(nsert) studentid lastname firstname zip year gpa: this command inserts a record to the structures.
 
-2. l(ook-up) studentid: this command searches for a student with "studentid" StudentID.
+2. **l**(ook-up) studentid: this command searches for a student with "studentid" StudentID.
 
-3. d(elete) studentid: this command deletes both of the structures the student with "studentid" StudentID , if exists.
+3. **d**(elete) studentid: this command deletes both of the structures the student with "studentid" StudentID , if exists.
 
-4. n(umber) year: for the academic year "year" find how many students are enrolled .
+4. **n**(umber) year: for the academic year "year" find how many students are enrolled .
 
-5. t(op) num year: this command finds the top "num" students for "year" year , based on their GPA.
+5. **t**(op) num year: this command finds the top "num" students for "year" year , based on their GPA.
 
-6. a(verage) year: this command finds the average GPA for "year" year.
+6. **a**(verage) year: this command finds the average GPA for "year" year.
 
-7. m(inimum) year: this command finds the student with the smallest GPA for "year" year.
+7. **m**(inimum) year: this command finds the student with the smallest GPA for "year" year.
 
-8. c(ount): for each year find how many students are enrolled.
+8. **c**(ount): for each year find how many students are enrolled.
 
-9. exit: terminates the main program and deallocate all the memory that allocated dynamically.
+9. **exit**: terminates the main program and deallocate all the memory that allocated dynamically.
 
 
 
